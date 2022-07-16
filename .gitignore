@@ -75,7 +75,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Negate global rules
-!.*meta
+!*.meta
 !/[Pp]ackages/*
 
 # End of https://www.toptal.com/developers/gitignore/api/unity
