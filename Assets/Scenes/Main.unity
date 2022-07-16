@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 84369693}
   - component: {fileID: 84369692}
   - component: {fileID: 84369691}
+  - component: {fileID: 84369694}
   m_Layer: 0
   m_Name: Barrier_X-
   m_TagString: Untagged
@@ -226,6 +227,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84369689}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &84369694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84369689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66178b1b5ef59a469869d22124c218b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 10
 --- !u!1 &171736608
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +252,7 @@ GameObject:
   - component: {fileID: 171736612}
   - component: {fileID: 171736611}
   - component: {fileID: 171736610}
+  - component: {fileID: 171736613}
   m_Layer: 0
   m_Name: Barrier_X+
   m_TagString: Untagged
@@ -324,6 +339,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171736608}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &171736613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171736608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66178b1b5ef59a469869d22124c218b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 10
 --- !u!1 &372194884
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +783,7 @@ GameObject:
   - component: {fileID: 1053387292}
   - component: {fileID: 1053387291}
   - component: {fileID: 1053387290}
+  - component: {fileID: 1053387293}
   m_Layer: 0
   m_Name: Barrier_Z+
   m_TagString: Untagged
@@ -841,6 +870,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053387288}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1053387293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053387288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66178b1b5ef59a469869d22124c218b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 10
 --- !u!1 &1103932106
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,6 +895,7 @@ GameObject:
   - component: {fileID: 1103932110}
   - component: {fileID: 1103932109}
   - component: {fileID: 1103932108}
+  - component: {fileID: 1103932111}
   m_Layer: 0
   m_Name: Barrier_Top
   m_TagString: Untagged
@@ -939,6 +982,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103932106}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1103932111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103932106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66178b1b5ef59a469869d22124c218b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 10
 --- !u!1001 &1601831678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1042,6 +1098,7 @@ GameObject:
   - component: {fileID: 1665074738}
   - component: {fileID: 1665074737}
   - component: {fileID: 1665074736}
+  - component: {fileID: 1665074739}
   m_Layer: 0
   m_Name: Barrier_Z-
   m_TagString: Untagged
@@ -1128,6 +1185,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1665074734}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1665074739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665074734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66178b1b5ef59a469869d22124c218b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 10
 --- !u!1 &1911922571
 GameObject:
   m_ObjectHideFlags: 0
