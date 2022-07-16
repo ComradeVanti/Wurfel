@@ -10,13 +10,13 @@ namespace Dev.ComradeVanti.Wurfel
     {
 
         [SerializeField] private LayerMask affectedLayers;
+        [SerializeField] private new ParticleSystem particleSystem;
         [SerializeField] private float maxRadius;
         [SerializeField] private float maxForce;
 
 
         protected override void ExecuteEffect(int strength)
         {
-            Debug.Log($"Boom {strength}");
             var t = Mathf.InverseLerp(0, 6, strength);
             var radius = Mathf.Lerp(0, maxRadius, t);
             var force = Mathf.Lerp(0, maxForce, t);
@@ -37,6 +37,8 @@ namespace Dev.ComradeVanti.Wurfel
 
                 rigidbody.AddForce(direction * adjustedForce, ForceMode.Impulse);
             });
+            
+            particleSystem.Play();
         }
 
         private IEnumerable<Rigidbody> FindTargetsInRange(float radius) =>

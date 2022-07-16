@@ -1,3 +1,4 @@
+using ComradeVanti.CSharpTools;
 using UnityEngine;
 
 namespace Dev.ComradeVanti.Wurfel
@@ -6,30 +7,32 @@ namespace Dev.ComradeVanti.Wurfel
     public abstract class DiceEffect : MonoBehaviour
     {
 
-        private bool moved;
+        private bool wasInAir;
+        private Opt<int> lastStrength = Opt.None<int>();
 
 
         public bool ExecutedThisRound { get; set; }
 
-        private bool CanExecute => !ExecutedThisRound && moved;
-
-
         public void OnValueChanged(int strength)
         {
-            if (CanExecute)
+            if (CanExecuteWith(strength))
             {
                 ExecutedThisRound = true;
-                moved = false;
+                wasInAir = false;
+                lastStrength = Opt.Some(strength);
                 ExecuteEffect(strength);
             }
         }
 
+        private bool CanExecuteWith(int strength) =>
+            !ExecutedThisRound && (wasInAir || !lastStrength.Contains(strength));
+
         public void OnMotionStateChanged(DiceMotionState motionState)
         {
-            if (motionState.GroundedState != DiceGroundedState.FlatOnGround)
-                moved = true;
+            if (motionState.GroundedState == DiceGroundedState.InAir)
+                wasInAir = true;
         }
-        
+
         protected abstract void ExecuteEffect(int strength);
 
     }

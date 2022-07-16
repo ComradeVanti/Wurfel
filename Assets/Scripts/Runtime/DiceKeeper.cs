@@ -18,7 +18,11 @@ namespace Dev.ComradeVanti.Wurfel
 
 
         public void OnDiceLaunched() =>
-            die.Iter(it => it.AllowEffects());
+            AllowEffects();
+
+        private void AllowEffects() => die.Iter(it => it.AllowEffects());
+
+        private void PreventEffects() => die.Iter(it => it.PreventEffects());
 
         public void OnDiceSpawned(GameObject diceGameObject)
         {
@@ -29,8 +33,10 @@ namespace Dev.ComradeVanti.Wurfel
 
         private IEnumerator WaitForDieToStopMoving()
         {
-            while (!die.All(it => it.IsResting)) yield return null;
+            while (!die.All(it => it.IsResting))
+                yield return new WaitForSeconds(1f);
             yield return new WaitForSeconds(1f);
+            PreventEffects();
             onAllDieBecameStill.Invoke();
         }
 
@@ -55,6 +61,9 @@ namespace Dev.ComradeVanti.Wurfel
                 effect = gameObject.TryGetComponent<DiceEffect>();
             }
 
+
+            public void PreventEffects() =>
+                effect.Iter(it => it.ExecutedThisRound = true);
 
             public void AllowEffects() =>
                 effect.Iter(it => it.ExecutedThisRound = false);
