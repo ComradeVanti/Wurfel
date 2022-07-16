@@ -11,6 +11,7 @@ namespace Dev.ComradeVanti.Wurfel
     {
 
         [SerializeField] private UnityEvent<Opt<float>> onLaunchForceChanged;
+        [SerializeField] private UnityEvent onDiceLaunched;
         [SerializeField] private SpringJoint spring;
         [SerializeField] private float tumbleForce;
         [SerializeField] private float launchAngleRange;
@@ -73,6 +74,7 @@ namespace Dev.ComradeVanti.Wurfel
                 spring.connectedBody = null;
                 diceRigidbody.AddForce(LaunchDir * force, ForceMode.Impulse);
                 tumbleBody = Opt.None<Rigidbody>();
+                onDiceLaunched.Invoke();
             }
 
             IEnumerator ChargeForce()

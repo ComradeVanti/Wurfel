@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ComradeVanti.CSharpTools;
+using ComradeVanti.OptUnity;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +16,9 @@ namespace Dev.ComradeVanti.Wurfel
 
         private readonly List<Dice> die = new List<Dice>();
 
+
+        public void OnDiceLaunched() =>
+            die.Iter(it => it.AllowEffects());
 
         public void OnDiceSpawned(GameObject diceGameObject)
         {
@@ -35,6 +40,8 @@ namespace Dev.ComradeVanti.Wurfel
 
             private readonly DiceMotionTracker diceMotionTracker;
 
+            private readonly Opt<DiceEffect> effect;
+
             private readonly GameObject gameObject;
 
 
@@ -45,7 +52,12 @@ namespace Dev.ComradeVanti.Wurfel
             {
                 this.gameObject = gameObject;
                 diceMotionTracker = gameObject.GetComponent<DiceMotionTracker>();
+                effect = gameObject.TryGetComponent<DiceEffect>();
             }
+
+
+            public void AllowEffects() =>
+                effect.Iter(it => it.ExecutedThisRound = false);
 
         }
 

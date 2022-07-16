@@ -1110,8 +1110,9 @@ GameObject:
   - component: {fileID: 5823031485454304564}
   - component: {fileID: 2749660490559210522}
   - component: {fileID: 279358274393584594}
+  - component: {fileID: 8010676653888453913}
   m_Layer: 3
-  m_Name: Dice_Default
+  m_Name: Dice_Boom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1166,7 +1167,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b0b91bd002834094b9bb11fdb7a802dc, type: 2}
+  - {fileID: 2100000, guid: 071d210db6ad2624183f636accd0933a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1231,7 +1232,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8010676653888453913}
+        m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.DiceEffect, Dev.ComradeVanti.Wurfel
+        m_MethodName: OnValueChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &279358274393584594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1265,6 +1278,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8010676653888453913}
+        m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.DiceEffect, Dev.ComradeVanti.Wurfel
+        m_MethodName: OnMotionStateChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8010676653888453913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955417351387433534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 143b663a7421aa348bf18ea402034b5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  maxRadius: 20
+  maxForce: 30
 --- !u!1 &8055449199715920217
 GameObject:
   m_ObjectHideFlags: 0

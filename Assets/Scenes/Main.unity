@@ -1033,7 +1033,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  prefab: {fileID: 7955417351387433534, guid: 0a8bff47841efe8439402dc0863709f7, type: 3}
+  prefab: {fileID: 7955417351387433534, guid: ba16572887bd543429db2e79c1790c04, type: 3}
 --- !u!114 &897896095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,8 +1551,28 @@ PrefabInstance:
       value: RedBase
       objectReference: {fileID: 0}
     - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
       propertyPath: onLaunchForceChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 897896095}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDiceLaunched
       objectReference: {fileID: 0}
     - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
       propertyPath: onLaunchForceChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1571,8 +1591,16 @@ PrefabInstance:
       value: OnLaunchForceChanged
       objectReference: {fileID: 0}
     - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Dev.ComradeVanti.Wurfel.DiceKeeper, Dev.ComradeVanti.Wurfel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
       propertyPath: onLaunchForceChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Dev.ComradeVanti.Wurfel.UI.LaunchForceDisplay, Dev.ComradeVanti.Wurfel.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
       propertyPath: onLaunchForceChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1984,8 +2012,28 @@ PrefabInstance:
       value: BlueBase
       objectReference: {fileID: 0}
     - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
       propertyPath: onLaunchForceChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 897896095}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDiceLaunched
       objectReference: {fileID: 0}
     - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
       propertyPath: onLaunchForceChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2004,8 +2052,16 @@ PrefabInstance:
       value: OnLaunchForceChanged
       objectReference: {fileID: 0}
     - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Dev.ComradeVanti.Wurfel.DiceKeeper, Dev.ComradeVanti.Wurfel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
       propertyPath: onLaunchForceChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Dev.ComradeVanti.Wurfel.UI.LaunchForceDisplay, Dev.ComradeVanti.Wurfel.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
+      propertyPath: onDiceLaunched.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
       propertyPath: onLaunchForceChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

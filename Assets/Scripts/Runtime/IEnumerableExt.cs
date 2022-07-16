@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ComradeVanti.CSharpTools;
 
 namespace Dev.ComradeVanti.Wurfel
 {
@@ -40,9 +41,16 @@ namespace Dev.ComradeVanti.Wurfel
 
         public static T FirstBy<T>(this IEnumerable<T> items, Func<T, float> sorter) =>
             items.OrderBy(sorter).First();
+        
+        public static T LastBy<T>(this IEnumerable<T> items, Func<T, float> sorter) =>
+            items.OrderByDescending(sorter).First();
 
         public static IEnumerable<T> Slice<T>(this IEnumerable<T> items, int start, int count) =>
             items.Skip(start).Take(count);
+
+        public static IEnumerable<T> Collect<T>(this IEnumerable<Opt<T>> opts) =>
+            opts.Where(opt => opt.IsSome())
+                .Select(opt => opt.Get());
 
     }
 

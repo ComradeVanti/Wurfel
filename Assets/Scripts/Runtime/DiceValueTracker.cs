@@ -12,7 +12,7 @@ namespace Dev.ComradeVanti.Wurfel
         private DiceValuePoint[] valuePoints;
 
 
-        private DiceValuePoint TopValuePoint => valuePoints.FirstBy(it => it.Y);
+        private DiceValuePoint TopValuePoint => valuePoints.LastBy(it => it.Y);
 
         public int Value => TopValuePoint.Value;
 
