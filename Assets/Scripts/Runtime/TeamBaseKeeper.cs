@@ -10,11 +10,7 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private DiceSpawner diceSpawner;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private DiceLauncher launcher;
-        [SerializeField] private Vector3 spawnOffset;
-
-
-        private Vector3 SpawnPosition => transform.position + spawnOffset;
-
+        
 
         public void OnTurnTeamChanged(Team turnTeam)
         {
@@ -27,7 +23,7 @@ namespace Dev.ComradeVanti.Wurfel
 
         private void SpawnDice()
         {
-            var diceGameObject = diceSpawner.SpawnDice(SpawnPosition);
+            var diceGameObject = diceSpawner.SpawnDice(transform.position);
             launcher.PrepareForLaunching(diceGameObject);
             cameraController.Follow(diceGameObject.transform, transform.forward);
         }
