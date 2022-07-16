@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,13 +7,14 @@ namespace Dev.ComradeVanti.Wurfel
     public class DiceLauncher : MonoBehaviour
     {
 
-        [SerializeField] private  SpringJoint spring;
+        [SerializeField] private CameraController cameraController;
+        [SerializeField] private SpringJoint spring;
         [SerializeField] private new Rigidbody rigidbody;
         [SerializeField] private float tumbleForce;
         [SerializeField] private float launchAngleRange;
         [SerializeField] private float launchForce;
 
-        
+
         private static float ScreenWidth => Screen.width;
 
         private static (float min, float max) LeftRightPixelRange
@@ -44,6 +44,15 @@ namespace Dev.ComradeVanti.Wurfel
         private Vector3 LaunchDir => Quaternion.AngleAxis(LaunchAngle, Vector3.up) * Vector2.right;
 
 
+        private void Awake() => 
+            cameraController.Follow(rigidbody.transform);
+
+        private void Update()
+        {
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+                Launch();
+        }
+
         private void FixedUpdate()
         {
             if (rigidbody)
@@ -54,12 +63,6 @@ namespace Dev.ComradeVanti.Wurfel
                     Mathf.PingPong(Time.time + 0.75f, 1));
                 rigidbody.AddTorque(direction * tumbleForce);
             }
-        }
-
-        private void Update()
-        {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-                Launch();
         }
 
         private void Launch()
