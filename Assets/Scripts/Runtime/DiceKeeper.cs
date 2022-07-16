@@ -19,12 +19,12 @@ namespace Dev.ComradeVanti.Wurfel
         {
             var dice = new Dice(diceGameObject);
             die.Add(dice);
-            StartCoroutine(WaitForDieToBecomeStill());
+            StartCoroutine(WaitForDieToStopMoving());
         }
 
-        private IEnumerator WaitForDieToBecomeStill()
+        private IEnumerator WaitForDieToStopMoving()
         {
-            while (die.Any(it => !it.IsStill)) yield return null;
+            while (!die.All(it => it.IsResting)) yield return null;
             yield return new WaitForSeconds(1f);
             onAllDieBecameStill.Invoke();
         }
@@ -33,17 +33,18 @@ namespace Dev.ComradeVanti.Wurfel
         private class Dice
         {
 
+            private readonly DiceMotionTracker diceMotionTracker;
+
             private readonly GameObject gameObject;
-            private readonly StillnessDetector stillnessDetector;
 
 
-            public bool IsStill => stillnessDetector.IsStill;
+            public bool IsResting => diceMotionTracker.MotionState.IsResting;
 
 
             public Dice(GameObject gameObject)
             {
                 this.gameObject = gameObject;
-                stillnessDetector = gameObject.GetComponent<StillnessDetector>();
+                diceMotionTracker = gameObject.GetComponent<DiceMotionTracker>();
             }
 
         }

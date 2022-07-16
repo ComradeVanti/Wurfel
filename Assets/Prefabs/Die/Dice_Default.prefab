@@ -1246,15 +1246,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   rigidbody: {fileID: 5823031485454304564}
-  stillSpeedThreshold: 0.1
-  onIsStillChanged:
+  stillMovementSpeedThreshold: 0.1
+  stillRotationSpeedThreshold: 0.1
+  onMotionChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2749660490559210522}
         m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.DiceValueTracker, Dev.ComradeVanti.Wurfel
-        m_MethodName: OnIsStillChanged
+        m_MethodName: OnMotionStateChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

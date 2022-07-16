@@ -20,9 +20,9 @@ namespace Dev.ComradeVanti.Wurfel
         private void Awake() =>
             valuePoints = GetComponentsInChildren<DiceValuePoint>();
 
-        public void OnIsStillChanged(bool isStill)
+        public void OnMotionStateChanged(DiceMotionState motionState)
         {
-            if (isStill)
+            if (motionState.IsRestingFlat)
                 onValueChanged.Invoke(Value);
         }
 

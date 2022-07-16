@@ -1,5 +1,3 @@
-using ComradeVanti.CSharpTools;
-using ComradeVanti.OptUnity;
 using UnityEngine;
 
 namespace Dev.ComradeVanti.Wurfel
@@ -15,9 +13,7 @@ namespace Dev.ComradeVanti.Wurfel
 
 
         private void OnCollisionEnter(Collision collision) =>
-            collision.gameObject
-                     .TryGetComponent<Rigidbody>()
-                     .Iter(rigidbody => rigidbody.AddForce(BounceForce, ForceMode.Impulse));
+            collision.rigidbody.AddForce(BounceForce, ForceMode.Impulse);
 
     }
 

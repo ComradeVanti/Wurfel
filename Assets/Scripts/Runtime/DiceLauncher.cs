@@ -84,8 +84,9 @@ namespace Dev.ComradeVanti.Wurfel
                     onLaunchForceChanged.Invoke(Opt.Some(t));
                     yield return null;
                 }
+
                 onLaunchForceChanged.Invoke(Opt.None<float>());
-                
+
                 var force = Mathf.Lerp(minLaunchForce, maxLaunchForce, t);
                 LaunchWith(force);
             }
