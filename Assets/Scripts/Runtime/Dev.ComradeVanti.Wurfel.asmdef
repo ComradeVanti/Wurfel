@@ -1,0 +1,14 @@
+{
+    "name": "Dev.ComradeVanti.Wurfel",
+    "rootNamespace": "Dev.ComradeVanti.Wurfel",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
