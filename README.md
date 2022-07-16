@@ -6,7 +6,5 @@ A 1v1 arena-game with die
 
 ## Credits
 
-Dice-models by [Tha177c](https://www.thingiverse.com/thing:94738/files), shared
-under
-the [Attribution-NonCommercial-ShareAlike](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-license.
+Dice models generated using
+[Andrew Marshes polyhedra generator](https://drajmarsh.bitbucket.io/poly3d.html).
