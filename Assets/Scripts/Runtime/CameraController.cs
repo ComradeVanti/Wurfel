@@ -17,6 +17,7 @@ namespace Dev.ComradeVanti.Wurfel
 
         private Opt<Coroutine> followRoutine = Opt.None<Coroutine>();
         private Opt<Vector3> targetPosition = Opt.None<Vector3>();
+        private Vector3 lookDirection;
         private Vector3 moveVelocity;
         private Vector3 rotateVelocity;
 
@@ -41,7 +42,7 @@ namespace Dev.ComradeVanti.Wurfel
             targetPosition.Iter(target =>
             {
                 var offsetTarget = CalcOffsetTarget(target);
-                
+
                 Position = CalcNextPosition(offsetTarget);
                 Rotation = CalcNextRotation(target);
             });
@@ -56,18 +57,18 @@ namespace Dev.ComradeVanti.Wurfel
 
         private Vector3 CalcOffsetTarget(Vector3 target)
         {
-            var targetToCam = (Position - target).normalized;
-            var offset = (targetToCam.Flat() * distance).WithY(height);
+            var offset = (-lookDirection.Flat() * distance).WithY(height);
             return target + offset;
         }
 
-        public void LookAt(Vector3 position)
+        public void LookAt(Vector3 position, Vector3 lookDirection)
         {
             StopFollowing();
+            this.lookDirection = lookDirection;
             targetPosition = Opt.Some(position);
         }
 
-        public void Follow(Transform transform)
+        public void Follow(Transform transform, Vector3 lookDirection)
         {
             IEnumerator Routine()
             {
@@ -79,6 +80,7 @@ namespace Dev.ComradeVanti.Wurfel
             }
 
             StopFollowing();
+            this.lookDirection = lookDirection;
             followRoutine = Opt.Some(StartCoroutine(Routine()));
         }
 

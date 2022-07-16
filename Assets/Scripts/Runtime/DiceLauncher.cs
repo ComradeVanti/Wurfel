@@ -1,3 +1,4 @@
+using ComradeVanti.CSharpTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,12 +8,12 @@ namespace Dev.ComradeVanti.Wurfel
     public class DiceLauncher : MonoBehaviour
     {
 
-        [SerializeField] private CameraController cameraController;
         [SerializeField] private SpringJoint spring;
-        [SerializeField] private new Rigidbody rigidbody;
         [SerializeField] private float tumbleForce;
         [SerializeField] private float launchAngleRange;
         [SerializeField] private float launchForce;
+
+        private Opt<Rigidbody> tumbleBody;
 
 
         private static float ScreenWidth => Screen.width;
@@ -41,36 +42,39 @@ namespace Dev.ComradeVanti.Wurfel
 
         private float LaunchAngle => Mathf.Lerp(-launchAngleRange, launchAngleRange, MouseT);
 
-        private Vector3 LaunchDir => Quaternion.AngleAxis(LaunchAngle, Vector3.up) * Vector2.right;
+        private Vector3 LaunchDir => Quaternion.AngleAxis(LaunchAngle, Vector3.up) * transform.forward;
 
-
-        private void Awake() => 
-            cameraController.Follow(rigidbody.transform);
 
         private void Update()
         {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-                Launch();
+            if (Mouse.current.leftButton.wasPressedThisFrame && tumbleBody.IsSome())
+                tumbleBody.Iter(Launch);
         }
 
-        private void FixedUpdate()
-        {
-            if (rigidbody)
+        private void FixedUpdate() =>
+            tumbleBody.Iter(body =>
             {
                 var direction = new Vector3(
                     Mathf.PingPong(Time.time, 1),
                     Mathf.PingPong(Time.time + 0.5f, 1),
                     Mathf.PingPong(Time.time + 0.75f, 1));
-                rigidbody.AddTorque(direction * tumbleForce);
-            }
-        }
+                body.AddTorque(direction * tumbleForce);
+            });
 
-        private void Launch()
+        private void Launch(Rigidbody diceRigidbody)
         {
             spring.connectedBody = null;
             var force = LaunchDir * launchForce;
-            rigidbody.AddForce(force, ForceMode.Impulse);
-            rigidbody = null;
+            diceRigidbody.AddForce(force, ForceMode.Impulse);
+            tumbleBody = Opt.None<Rigidbody>();
+        }
+
+        public void PrepareForLaunching(GameObject diceGameObject)
+        {
+            var diceRigidbody = diceGameObject.GetComponent<Rigidbody>();
+
+            tumbleBody = Opt.Some(diceRigidbody);
+            spring.connectedBody = diceRigidbody;
         }
 
     }

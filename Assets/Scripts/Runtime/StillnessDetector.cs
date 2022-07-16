@@ -16,16 +16,16 @@ namespace Dev.ComradeVanti.Wurfel
 
         private bool prevIsStill;
         private Transform[] faceTransforms;
-
-
+        
+        
         private float Speed => rigidbody.velocity.magnitude;
 
         private bool IsMoving => Speed > stillSpeedThreshold;
         
         private bool IsGrounded => faceTransforms.Any(FaceIsGrounded);
 
-        private bool IsStill => !IsMoving && IsGrounded;
-        
+        public bool IsStill => !IsMoving && IsGrounded;
+
 
         private void Awake() =>
             faceTransforms = GetComponentsInChildren<DiceValuePoint>()
