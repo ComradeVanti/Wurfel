@@ -25,6 +25,7 @@ namespace Dev.ComradeVanti.Wurfel
         private IEnumerator WaitForDieToBecomeStill()
         {
             while (die.Any(it => !it.IsStill)) yield return null;
+            yield return new WaitForSeconds(1f);
             onAllDieBecameStill.Invoke();
         }
 
