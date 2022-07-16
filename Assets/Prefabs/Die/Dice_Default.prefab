@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 7955417351387433535}
   - component: {fileID: 5823031485454304564}
   - component: {fileID: 2749660490559210522}
+  - component: {fileID: 279358274393584594}
   m_Layer: 0
   m_Name: Dice_Default
   m_TagString: Untagged
@@ -358,6 +359,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e534c6a3c0b4a443999c54882fbfeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &279358274393584594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955417351387433534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f3a280e7256c94499880f8c1e304e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  rigidbody: {fileID: 5823031485454304564}
+  stillSpeedThreshold: 0.1
 --- !u!1 &8055449199715920217
 GameObject:
   m_ObjectHideFlags: 0
