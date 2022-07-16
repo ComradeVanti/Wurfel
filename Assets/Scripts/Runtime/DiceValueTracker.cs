@@ -16,6 +16,8 @@ namespace Dev.ComradeVanti.Wurfel
 
         public int Value => TopValuePoint.Value;
 
+        public UnityEvent<int> OnValueChanged => onValueChanged;
+
 
         private void Awake() =>
             valuePoints = GetComponentsInChildren<DiceValuePoint>();

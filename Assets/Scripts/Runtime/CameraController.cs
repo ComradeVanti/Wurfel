@@ -84,6 +84,9 @@ namespace Dev.ComradeVanti.Wurfel
             followRoutine = Opt.Some(StartCoroutine(Routine()));
         }
 
+        public void Follow(Transform transform) =>
+            Follow(transform, lookDirection);
+
         public void StopFollowing()
         {
             followRoutine.Iter(StopCoroutine);

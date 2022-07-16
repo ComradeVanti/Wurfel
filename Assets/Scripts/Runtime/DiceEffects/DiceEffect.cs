@@ -1,5 +1,6 @@
 using ComradeVanti.CSharpTools;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Dev.ComradeVanti.Wurfel
 {
@@ -7,12 +8,16 @@ namespace Dev.ComradeVanti.Wurfel
     public abstract class DiceEffect : MonoBehaviour
     {
 
+        [SerializeField] private UnityEvent onExecuted;
+        
         private bool wasInAir;
         private Opt<int> lastStrength = Opt.None<int>();
 
 
         public bool ExecutedThisRound { get; set; }
 
+        public UnityEvent OnExecuted => onExecuted;
+        
         public void OnValueChanged(int strength)
         {
             if (CanExecuteWith(strength))
@@ -21,6 +26,7 @@ namespace Dev.ComradeVanti.Wurfel
                 wasInAir = false;
                 lastStrength = Opt.Some(strength);
                 ExecuteEffect(strength);
+                OnExecuted.Invoke();
             }
         }
 

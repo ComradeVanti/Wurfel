@@ -1046,6 +1046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57520ef567f48c4b96c48ae48deb34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraController: {fileID: 963194229}
   onAllDieBecameStill:
     m_PersistentCalls:
       m_Calls:

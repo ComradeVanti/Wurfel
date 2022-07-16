@@ -12,6 +12,7 @@ namespace Dev.ComradeVanti.Wurfel
     public class DiceKeeper : MonoBehaviour
     {
 
+        [SerializeField] private CameraController cameraController;
         [SerializeField] private UnityEvent onAllDieBecameStill;
 
         private readonly List<Dice> die = new List<Dice>();
@@ -20,14 +21,17 @@ namespace Dev.ComradeVanti.Wurfel
         public void OnDiceLaunched() =>
             AllowEffects();
 
-        private void AllowEffects() => die.Iter(it => it.AllowEffects());
+        private void AllowEffects() =>
+            die.Iter(it => it.AllowEffects());
 
-        private void PreventEffects() => die.Iter(it => it.PreventEffects());
+        private void PreventEffects() =>
+            die.Iter(it => it.PreventEffects());
 
         public void OnDiceSpawned(GameObject diceGameObject)
         {
             var dice = new Dice(diceGameObject);
             die.Add(dice);
+            dice.OnEffectExecuted.Iter(it => it.AddListener(() => cameraController.Follow(diceGameObject.transform)));
             StartCoroutine(WaitForDieToStopMoving());
         }
 
@@ -44,20 +48,25 @@ namespace Dev.ComradeVanti.Wurfel
         private class Dice
         {
 
-            private readonly DiceMotionTracker diceMotionTracker;
-
             private readonly Opt<DiceEffect> effect;
 
             private readonly GameObject gameObject;
 
+            private readonly DiceMotionTracker motionTracker;
 
-            public bool IsResting => diceMotionTracker.MotionState.IsResting;
+            private readonly DiceValueTracker valueTracker;
+
+
+            public bool IsResting => motionTracker.MotionState.IsResting;
+
+            public Opt<UnityEvent> OnEffectExecuted => effect.Map(it => it.OnExecuted);
 
 
             public Dice(GameObject gameObject)
             {
                 this.gameObject = gameObject;
-                diceMotionTracker = gameObject.GetComponent<DiceMotionTracker>();
+                valueTracker = gameObject.GetComponent<DiceValueTracker>();
+                motionTracker = gameObject.GetComponent<DiceMotionTracker>();
                 effect = gameObject.TryGetComponent<DiceEffect>();
             }
 
