@@ -137,10 +137,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89d6ea23b7484074e97191e86c578aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onLaunchForceChanged:
+    m_PersistentCalls:
+      m_Calls: []
   spring: {fileID: 2412201340563984556}
   tumbleForce: 15
   launchAngleRange: 40
-  launchForce: 20
+  minLaunchForce: 5
+  maxLaunchForce: 30
+  launchForceChargeTime: 1
 --- !u!1 &2412201340763819574
 GameObject:
   m_ObjectHideFlags: 0

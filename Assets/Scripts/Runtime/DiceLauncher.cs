@@ -1,5 +1,7 @@
+using System.Collections;
 using ComradeVanti.CSharpTools;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Dev.ComradeVanti.Wurfel
@@ -8,10 +10,13 @@ namespace Dev.ComradeVanti.Wurfel
     public class DiceLauncher : MonoBehaviour
     {
 
+        [SerializeField] private UnityEvent<Opt<float>> onLaunchForceChanged;
         [SerializeField] private SpringJoint spring;
         [SerializeField] private float tumbleForce;
         [SerializeField] private float launchAngleRange;
-        [SerializeField] private float launchForce;
+        [SerializeField] private float minLaunchForce;
+        [SerializeField] private float maxLaunchForce;
+        [SerializeField] private float launchForceChargeTime;
 
         private Opt<Rigidbody> tumbleBody;
 
@@ -63,10 +68,29 @@ namespace Dev.ComradeVanti.Wurfel
 
         private void Launch(Rigidbody diceRigidbody)
         {
-            spring.connectedBody = null;
-            var force = LaunchDir * launchForce;
-            diceRigidbody.AddForce(force, ForceMode.Impulse);
-            tumbleBody = Opt.None<Rigidbody>();
+            void LaunchWith(float force)
+            {
+                spring.connectedBody = null;
+                diceRigidbody.AddForce(LaunchDir * force, ForceMode.Impulse);
+                tumbleBody = Opt.None<Rigidbody>();
+            }
+
+            IEnumerator ChargeForce()
+            {
+                var t = 0f;
+                while (Mouse.current.leftButton.isPressed)
+                {
+                    t = Mathf.MoveTowards(t, 1f, Time.deltaTime / launchForceChargeTime);
+                    onLaunchForceChanged.Invoke(Opt.Some(t));
+                    yield return null;
+                }
+                onLaunchForceChanged.Invoke(Opt.None<float>());
+                
+                var force = Mathf.Lerp(minLaunchForce, maxLaunchForce, t);
+                LaunchWith(force);
+            }
+
+            StartCoroutine(ChargeForce());
         }
 
         public void PrepareForLaunching(GameObject diceGameObject)
