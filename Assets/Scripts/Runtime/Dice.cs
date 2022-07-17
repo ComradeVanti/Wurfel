@@ -1,4 +1,3 @@
-using System.Collections;
 using ComradeVanti.CSharpTools;
 using ComradeVanti.OptUnity;
 using UnityEngine;
@@ -10,7 +9,7 @@ namespace Dev.ComradeVanti.Wurfel
     {
 
         [SerializeField] private int scoreMultiplier;
-        
+
         private Opt<DiceEffect> effect;
         private MotionFreezer freezer;
 
@@ -70,8 +69,6 @@ namespace Dev.ComradeVanti.Wurfel
         public void OnEffectDone()
         {
             IsActivatingEffect = false;
-            FindObjectOfType<ArenaKeeper>()
-                .IsFrozen = false;
         }
 
         private void TryActivateEffect() =>
@@ -81,18 +78,8 @@ namespace Dev.ComradeVanti.Wurfel
                 IsActivatingEffect = true;
                 wasInAir = false;
                 lastValue = FaceValue;
-
-                IEnumerator Test()
-                {
-                    FindObjectOfType<CameraController>()
-                        .Follow(transform);
-                    FindObjectOfType<ArenaKeeper>()
-                        .IsFrozen = true;
-                    yield return new WaitForSeconds(1);
-                    it.Activate(FaceValue);
-                }
-
-                StartCoroutine(Test());
+                
+                it.Activate(FaceValue);
             });
 
     }

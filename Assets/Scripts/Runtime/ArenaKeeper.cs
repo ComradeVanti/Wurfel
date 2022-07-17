@@ -9,8 +9,7 @@ namespace Dev.ComradeVanti.Wurfel
 
     public class ArenaKeeper : MonoBehaviour
     {
-
-        [SerializeField] private CameraController cameraController;
+        
         [SerializeField] private UnityEvent onRoundEnded;
 
         private readonly List<Dice> die = new List<Dice>();

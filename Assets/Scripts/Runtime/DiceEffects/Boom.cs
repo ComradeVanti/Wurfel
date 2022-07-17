@@ -12,7 +12,7 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private float maxForce;
 
 
-        public override void Activate(int strength)
+        protected override void Execute(int strength)
         {
             var t = Mathf.InverseLerp(0, 6, strength);
             var force = Mathf.Lerp(0, maxForce, t);
@@ -26,7 +26,7 @@ namespace Dev.ComradeVanti.Wurfel
                 .Where(it => affectedLayers.Contains(it.gameObject.layer))
                 .Where(it => it.gameObject != gameObject);
 
-            onDone.Invoke();
+            CompleteEffect();
 
             affectedObjects.Iter(rigidbody =>
             {

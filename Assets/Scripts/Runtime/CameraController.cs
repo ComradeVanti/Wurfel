@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using ComradeVanti.CSharpTools;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Dev.ComradeVanti.Wurfel
 
     public class CameraController : MonoBehaviour
     {
-        
+
         [SerializeField] private float minDistance;
         [SerializeField] private float maxDistance;
         [SerializeField] private float height;
@@ -16,7 +17,6 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private float maxRotationSpeed;
 
         private Opt<Coroutine> followRoutine = Opt.None<Coroutine>();
-        private Opt<Vector3> targetPosition = Opt.None<Vector3>();
         private Vector3 moveVelocity;
         private Vector3 rotateVelocity;
 
@@ -43,24 +43,12 @@ namespace Dev.ComradeVanti.Wurfel
         }
 
 
-        private void Awake() =>
-            StopFollowing();
-
-        private void FixedUpdate() =>
-            targetPosition.Iter(target =>
-            {
-                var offsetTarget = CalcOffsetTarget(target);
-
-                Position = CalcNextPosition(offsetTarget);
-                Rotation = CalcNextRotation(target);
-            });
-
         private Vector3 CalcNextPosition(Vector3 target) =>
             Vector3.SmoothDamp(Position, target,
                                ref moveVelocity, smoothTime, maxMoveSpeed);
 
         private Vector3 CalcNextRotation(Vector3 target) =>
-            Vector3.SmoothDamp(Rotation, (target - Position).normalized,
+            Vector3.SmoothDamp(Rotation, target,
                                ref rotateVelocity, smoothTime, maxRotationSpeed);
 
         private Vector3 CalcOffsetTarget(Vector3 target)
@@ -70,32 +58,59 @@ namespace Dev.ComradeVanti.Wurfel
             return target + offset;
         }
 
-        public void LookAt(Vector3 position)
+        public Coroutine FollowWith(Func<Vector3> calcTarget, Func<Vector3, Vector3, bool> shouldStop)
         {
-            StopFollowing();
-            targetPosition = Opt.Some(position);
-        }
-
-        public void Follow(Transform transform)
-        {
-            IEnumerator Routine()
+            IEnumerator Move()
             {
                 while (enabled)
                 {
-                    targetPosition = Opt.Some(transform.position);
+                    var target = calcTarget();
+
+                    var offsetTarget = CalcOffsetTarget(target);
+                    var targetRotation = (target - Position).normalized;
+
+                    Position = CalcNextPosition(offsetTarget);
+                    Rotation = CalcNextRotation(targetRotation);
+
+                    if (shouldStop(offsetTarget, targetRotation))
+                        break;
                     yield return null;
                 }
             }
 
             StopFollowing();
-            followRoutine = Opt.Some(StartCoroutine(Routine()));
+            var routine = StartCoroutine(Move());
+            followRoutine = Opt.Some(routine);
+            return routine;
         }
+
+        public Coroutine LookAt(Vector3 target)
+        {
+            Vector3 CalcTarget() =>
+                target;
+
+            bool ShouldStop(Vector3 offsetTarget, Vector3 targetRotation)
+            {
+                var reachedTarget = Vector3.Distance(Position, offsetTarget) < 0.1f;
+                var looksAtTarget = Vector3.Distance(Rotation, targetRotation) < 0.1f;
+
+                return reachedTarget && looksAtTarget;
+            }
+
+            return FollowWith(CalcTarget, ShouldStop);
+        }
+
+        public Coroutine Follow(Transform transform) =>
+            FollowWith(() => transform.position, (_, _) => false);
 
         public void StopFollowing()
         {
-            followRoutine.Iter(StopCoroutine);
+            followRoutine.Iter(it =>
+            {
+                if (it != null)
+                    StopCoroutine(it);
+            });
             followRoutine = Opt.None<Coroutine>();
-            targetPosition = Opt.None<Vector3>();
         }
 
     }
