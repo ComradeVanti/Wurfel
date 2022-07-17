@@ -21,7 +21,8 @@ namespace Dev.ComradeVanti.Wurfel
             new DiceBag(new Dictionary<string, int>
             {
                 { "Boom", 5 },
-                { "Bad", 5 }
+                { "Bad", 5 },
+                { "Bouncy", 5 }
             });
 
         public string GetRandom()
