@@ -15,6 +15,7 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private DiceLauncher launcher;
         [SerializeField] private ArenaKeeper arenaKeeper;
         [SerializeField] private GameKeeper gameKeeper;
+        [SerializeField] private UnityEvent<int> onScoreChanged;
 
         private int score;
         private readonly DiceBag diceBag = DiceBag.MakeDefault();
@@ -35,6 +36,7 @@ namespace Dev.ComradeVanti.Wurfel
         public void CollectPoints()
         {
             score += arenaKeeper.CollectDice(team);
+            onScoreChanged.Invoke(score);
             gameKeeper.SwitchTeam();
         }
 
