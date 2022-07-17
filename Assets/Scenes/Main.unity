@@ -925,10 +925,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 6119273138065396979, guid: 297fab74deda6284d8a5f817ad3b8e00, type: 3}
-  - {fileID: 990309720604316409, guid: f7e86d3ce9f79624daa74b199754928e, type: 3}
-  - {fileID: 6119273138065396979, guid: 69e3fc229084393498d86d2c3e2fa5e2, type: 3}
-  - {fileID: 4880927265615194408, guid: 6294cffceb1826740a3d9a7f6c94ebc4, type: 3}
+  - item: {fileID: 6119273138065396979, guid: 297fab74deda6284d8a5f817ad3b8e00, type: 3}
+    weight: 10
+  - item: {fileID: 990309720604316409, guid: f7e86d3ce9f79624daa74b199754928e, type: 3}
+    weight: 6
+  - item: {fileID: 6119273138065396979, guid: 69e3fc229084393498d86d2c3e2fa5e2, type: 3}
+    weight: 2
+  - item: {fileID: 4880927265615194408, guid: 6294cffceb1826740a3d9a7f6c94ebc4, type: 3}
+    weight: 7
 --- !u!114 &897896095
 MonoBehaviour:
   m_ObjectHideFlags: 0

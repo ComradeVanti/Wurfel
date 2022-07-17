@@ -40,13 +40,7 @@ namespace Dev.ComradeVanti.Wurfel
         
         public void SpawnDice()
         {
-            var diceName = diceSpawner.DiceNames.Random();
-            SpawnDiceWithName(diceName);
-        }
-
-        private void SpawnDiceWithName(string diceName)
-        {
-            var diceGameObject = diceSpawner.SpawnDice(diceName, transform.position);
+            var diceGameObject = diceSpawner.SpawnDice(transform.position);
             launcher.Launch(diceGameObject);
             cameraController.Follow(diceGameObject.transform);
         }

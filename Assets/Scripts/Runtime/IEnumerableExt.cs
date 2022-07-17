@@ -80,6 +80,24 @@ namespace Dev.ComradeVanti.Wurfel
             return array[index];
         }
 
+        public static T RandomElementByWeight<T>(this IEnumerable<T> items, Func<T, float> weightSelector)
+        {
+            var array = items.ToArray();
+            var totalWeight = array.Sum(weightSelector);
+            var itemWeightIndex = UnityEngine.Random.Range(0, totalWeight);
+            float currentWeightIndex = 0;
+
+            foreach (var item in from weightedItem in array select new { Value = weightedItem, Weight = weightSelector(weightedItem) })
+            {
+                currentWeightIndex += item.Weight;
+
+                if (currentWeightIndex >= itemWeightIndex)
+                    return item.Value;
+            }
+
+            throw new Exception("Empty sequence");
+        }
+
     }
 
 }
