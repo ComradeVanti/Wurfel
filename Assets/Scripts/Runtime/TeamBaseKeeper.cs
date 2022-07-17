@@ -11,6 +11,8 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private CameraController cameraController;
         [SerializeField] private DiceLauncher launcher;
 
+        private readonly DiceBag diceBag = DiceBag.MakeDefault();
+        
 
         public void OnTurnTeamChanged(Team turnTeam)
         {
@@ -18,12 +20,13 @@ namespace Dev.ComradeVanti.Wurfel
                 StartTurn();
         }
 
-        public void StartTurn() =>
+        private void StartTurn() =>
             SpawnDice();
 
         private void SpawnDice()
         {
-            var diceGameObject = diceSpawner.SpawnDice("Boom", transform.position);
+            var diceName = diceBag.GetRandom();
+            var diceGameObject = diceSpawner.SpawnDice(diceName, transform.position);
             launcher.Launch(diceGameObject);
             cameraController.Follow(diceGameObject.transform);
         }
