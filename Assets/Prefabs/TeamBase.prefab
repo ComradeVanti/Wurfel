@@ -297,8 +297,8 @@ MonoBehaviour:
   spring: {fileID: 2412201340563984556}
   tumbleForce: 15
   launchAngleRange: 80
-  minLaunchForce: 5
-  maxLaunchForce: 30
+  minLaunchForce: 1
+  maxLaunchForce: 25
   launchForceChargeTime: 1
 --- !u!1 &2653548059998364025
 GameObject:

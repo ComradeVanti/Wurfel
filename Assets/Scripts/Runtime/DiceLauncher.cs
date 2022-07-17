@@ -89,10 +89,13 @@ namespace Dev.ComradeVanti.Wurfel
 
             IEnumerator ChargeForce()
             {
+                var time = 0f;
                 var t = 0f;
+
                 while (Mouse.current.leftButton.isPressed)
                 {
-                    t = Mathf.MoveTowards(t, 1f, Time.deltaTime / launchForceChargeTime);
+                    time += Time.deltaTime / launchForceChargeTime;
+                    t = Mathf.PingPong(time, 1f);
 
                     onLaunchAngleChanged.Invoke(Opt.Some(LaunchAngle));
                     onLaunchForceChanged.Invoke(Opt.Some(t));
