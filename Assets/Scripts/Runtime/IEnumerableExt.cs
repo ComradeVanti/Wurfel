@@ -41,7 +41,7 @@ namespace Dev.ComradeVanti.Wurfel
 
         public static T FirstBy<T>(this IEnumerable<T> items, Func<T, float> sorter) =>
             items.OrderBy(sorter).First();
-        
+
         public static T LastBy<T>(this IEnumerable<T> items, Func<T, float> sorter) =>
             items.OrderByDescending(sorter).First();
 
@@ -51,6 +51,24 @@ namespace Dev.ComradeVanti.Wurfel
         public static IEnumerable<T> Collect<T>(this IEnumerable<Opt<T>> opts) =>
             opts.Where(opt => opt.IsSome())
                 .Select(opt => opt.Get());
+
+        public static bool None<T>(this IEnumerable<T> items, Func<T, bool> pred) =>
+            !items.Any(pred);
+
+        public static T FirstOr<T>(this IEnumerable<T> items, T orDefault)
+        {
+            try
+            {
+                return items.First();
+            }
+            catch
+            {
+                return orDefault;
+            }
+        }
+
+        public static Opt<T> TryFirst<T>(this IEnumerable<T> items, Func<T, bool> pred) =>
+            items.Where(pred).Select(Opt.Some).FirstOr(Opt.None<T>());
 
     }
 

@@ -1,4 +1,5 @@
 using System.Linq;
+using ComradeVanti.CSharpTools;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,13 +11,13 @@ namespace Dev.ComradeVanti.Wurfel
 
         [SerializeField] private LayerMask groundLayers;
         [SerializeField] private new Rigidbody rigidbody;
+        [SerializeField] private MotionFreezer freezer;
         [SerializeField] private float stillMovementSpeedThreshold;
         [SerializeField] private float stillRotationSpeedThreshold;
-        [SerializeField] private UnityEvent<DiceMotionState> onMotionChanged;
+        [SerializeField] private UnityEvent<DiceMotionChange> onMotionChanged;
 
-        private DiceMotionState prevMotionState = new DiceMotionState(true, DiceGroundedState.InAir);
-        private int touchingGroundSurfacesCount;
-        private Transform[] faceTransforms;
+        private Opt<DiceMotionState> prevMotionState = Opt.None<DiceMotionState>();
+        private DiceFace[] faces;
 
 
         private float Speed => rigidbody.velocity.magnitude;
@@ -29,9 +30,9 @@ namespace Dev.ComradeVanti.Wurfel
 
         private bool IsMoving => IsMovingLaterally || IsRotating;
 
-        private bool IsOnGround => touchingGroundSurfacesCount > 0;
+        private bool IsOnGround => faces.Any(face => face.IsTouchingGround);
 
-        private bool IsFlatOnGround => faceTransforms.Any(FaceIsGrounded);
+        private bool IsFlatOnGround => faces.Any(face => face.IsFlatOnGround);
 
         private DiceGroundedState GroundedState =>
             IsOnGround
@@ -40,39 +41,27 @@ namespace Dev.ComradeVanti.Wurfel
                     : DiceGroundedState.TouchingGround
                 : DiceGroundedState.InAir;
 
-        public DiceMotionState MotionState =>
-            new DiceMotionState(IsMoving, GroundedState);
 
         private void Awake() =>
-            faceTransforms = GetComponentsInChildren<DiceValuePoint>()
-                             .Select(it => it.transform)
-                             .ToArray();
+            faces = GetComponentsInChildren<DiceFace>();
 
         private void Update()
         {
-            var motionState = MotionState;
+            if (!freezer.IsFrozen)
+                CheckForMotionUpdates();
+        }
+        
+        private void CheckForMotionUpdates()
+        {
+            var motionState = new DiceMotionState(IsMoving, GroundedState);
 
-            if (motionState != prevMotionState)
+            if (!prevMotionState.Contains(motionState))
             {
-                onMotionChanged.Invoke(motionState);
-                prevMotionState = motionState;
+                var change = new DiceMotionChange(motionState, prevMotionState);
+                onMotionChanged.Invoke(change);
+                prevMotionState = Opt.Some(motionState);
             }
         }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (groundLayers.Contains(collision.gameObject.layer))
-                touchingGroundSurfacesCount++;
-        }
-
-        private void OnCollisionExit(Collision collision)
-        {
-            if (groundLayers.Contains(collision.gameObject.layer))
-                touchingGroundSurfacesCount--;
-        }
-
-        private bool FaceIsGrounded(Transform faceTransform) =>
-            Physics.CheckSphere(faceTransform.position, 0.01f, groundLayers);
 
     }
 

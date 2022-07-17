@@ -11,15 +11,13 @@ namespace Dev.ComradeVanti.Wurfel
     {
 
         [SerializeField] private UnityEvent<Opt<float>> onLaunchForceChanged;
-        [SerializeField] private UnityEvent onDiceLaunched;
+        [SerializeField] private UnityEvent<GameObject> onDiceLaunched;
         [SerializeField] private SpringJoint spring;
         [SerializeField] private float tumbleForce;
         [SerializeField] private float launchAngleRange;
         [SerializeField] private float minLaunchForce;
         [SerializeField] private float maxLaunchForce;
         [SerializeField] private float launchForceChargeTime;
-
-        private Opt<Rigidbody> tumbleBody;
 
 
         private static float ScreenWidth => Screen.width;
@@ -51,33 +49,44 @@ namespace Dev.ComradeVanti.Wurfel
         private Vector3 LaunchDir => Quaternion.AngleAxis(LaunchAngle, Vector3.up) * transform.forward;
 
 
-        private void Update()
+        private Coroutine Hook(Rigidbody diceRigidbody)
         {
-            if (Mouse.current.leftButton.wasPressedThisFrame && tumbleBody.IsSome())
-                tumbleBody.Iter(Launch);
-        }
-
-        private void FixedUpdate() =>
-            tumbleBody.Iter(body =>
+            IEnumerator Tumble()
             {
-                var direction = new Vector3(
-                    Mathf.PingPong(Time.time, 1),
-                    Mathf.PingPong(Time.time + 0.5f, 1),
-                    Mathf.PingPong(Time.time + 0.75f, 1));
-                body.AddTorque(direction * tumbleForce);
-            });
-
-        private void Launch(Rigidbody diceRigidbody)
-        {
-            void LaunchWith(float force)
-            {
-                spring.connectedBody = null;
-                diceRigidbody.AddForce(LaunchDir * force, ForceMode.Impulse);
-                tumbleBody = Opt.None<Rigidbody>();
-                onDiceLaunched.Invoke();
+                while (enabled)
+                {
+                    var direction = new Vector3(
+                        Mathf.PingPong(Time.time, 1),
+                        Mathf.PingPong(Time.time + 0.5f, 1),
+                        Mathf.PingPong(Time.time + 0.75f, 1));
+                    diceRigidbody.AddTorque(direction * (tumbleForce * Time.deltaTime));
+                    yield return null;
+                }
             }
 
-            IEnumerator ChargeForce()
+            spring.connectedBody = diceRigidbody;
+            return StartCoroutine(Tumble());
+        }
+
+        private void Unhook(Coroutine tumbleRoutine)
+        {
+            StopCoroutine(tumbleRoutine);
+            spring.connectedBody = null;
+        }
+
+        public void Launch(GameObject diceGameObject)
+        {
+            var diceRigidbody = diceGameObject.GetComponent<Rigidbody>();
+            var tumbleRoutine = Hook(diceRigidbody);
+
+            void LaunchWith(Vector3 force)
+            {
+                Unhook(tumbleRoutine);
+                diceRigidbody.AddForce(force, ForceMode.Impulse);
+                onDiceLaunched.Invoke(diceGameObject);
+            }
+
+            IEnumerator ChargeForce(Vector3 launchDirection)
             {
                 var t = 0f;
                 while (Mouse.current.leftButton.isPressed)
@@ -90,18 +99,17 @@ namespace Dev.ComradeVanti.Wurfel
                 onLaunchForceChanged.Invoke(Opt.None<float>());
 
                 var force = Mathf.Lerp(minLaunchForce, maxLaunchForce, t);
-                LaunchWith(force);
+                LaunchWith(launchDirection * force);
             }
 
-            StartCoroutine(ChargeForce());
-        }
-
-        public void PrepareForLaunching(GameObject diceGameObject)
-        {
-            var diceRigidbody = diceGameObject.GetComponent<Rigidbody>();
-
-            tumbleBody = Opt.Some(diceRigidbody);
-            spring.connectedBody = diceRigidbody;
+            IEnumerator PickDirection()
+            {
+                while (!Mouse.current.leftButton.isPressed && enabled)
+                    yield return null;
+                StartCoroutine(ChargeForce(LaunchDir));
+            }
+            
+            StartCoroutine(PickDirection());
         }
 
     }

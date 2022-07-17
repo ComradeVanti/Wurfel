@@ -7,7 +7,7 @@ namespace Dev.ComradeVanti.Wurfel.UI
     public class FaceValueDisplay : MonoBehaviour
     {
 
-        [SerializeField] private DiceValuePoint valuePoint;
+        [SerializeField] private DiceFace face;
         [SerializeField] private TextMeshProUGUI valueDisplay;
 
 
@@ -26,7 +26,7 @@ namespace Dev.ComradeVanti.Wurfel.UI
             RefreshDisplay();
 
         private void RefreshDisplay() =>
-            DisplayedValue = valuePoint.Value;
+            DisplayedValue = face.Value;
 
     }
 

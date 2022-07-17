@@ -24,7 +24,7 @@ namespace Dev.ComradeVanti.Wurfel
         private void SpawnDice()
         {
             var diceGameObject = diceSpawner.SpawnDice(transform.position);
-            launcher.PrepareForLaunching(diceGameObject);
+            launcher.Launch(diceGameObject);
             cameraController.Follow(diceGameObject.transform, transform.forward);
         }
 

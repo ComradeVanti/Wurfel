@@ -15,7 +15,7 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private float maxForce;
 
 
-        protected override void ExecuteEffect(int strength)
+        public override void Activate(int strength)
         {
             var t = Mathf.InverseLerp(0, 6, strength);
             var radius = Mathf.Lerp(0, maxRadius, t);
@@ -28,6 +28,8 @@ namespace Dev.ComradeVanti.Wurfel
         {
             var affectedObjects = FindTargetsInRange(radius);
 
+            onDone.Invoke();
+            
             affectedObjects.Iter(rigidbody =>
             {
                 var diff = rigidbody.position - transform.position;
