@@ -10,8 +10,7 @@ namespace Dev.ComradeVanti.Wurfel
         
         private Opt<DiceEffect> effect;
         private MotionFreezer freezer;
-
-        private bool activatedEffect;
+        
         private bool wasInAir;
         private int lastValue;
 
@@ -49,7 +48,7 @@ namespace Dev.ComradeVanti.Wurfel
 
             var shouldActivateEffect =
                 change.Started(it => it.IsRestingFlat)
-                && !activatedEffect
+                && effect.Exists(it => it.CanActivate)
                 && (wasInAir || valueChanged);
 
             if (shouldActivateEffect)
@@ -57,10 +56,10 @@ namespace Dev.ComradeVanti.Wurfel
         }
 
         public void OnNewRoundStarted() =>
-            activatedEffect = false;
+            effect.Iter(it => it.OnRoundStarted());
 
         public void OnRoundEnded() =>
-            activatedEffect = true;
+            effect.Iter(it => it.OnRoundEnded());
 
         public void OnEffectDone()
         {
@@ -70,7 +69,6 @@ namespace Dev.ComradeVanti.Wurfel
         private void TryActivateEffect() =>
             effect.Iter(it =>
             {
-                activatedEffect = true;
                 IsActivatingEffect = true;
                 wasInAir = false;
                 lastValue = FaceValue;

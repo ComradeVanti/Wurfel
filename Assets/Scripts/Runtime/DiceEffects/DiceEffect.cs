@@ -7,9 +7,18 @@ namespace Dev.ComradeVanti.Wurfel
     public abstract class DiceEffect : MonoBehaviour
     {
 
+        [SerializeField] private bool oneUsePerRound;
+        
         protected Dice dice;
         protected CameraController cameraController;
         protected ArenaKeeper arenaKeeper;
+
+        private bool roundActive;
+        private bool activatedEffect;
+
+
+        public virtual bool CanActivate => roundActive && (!activatedEffect || !oneUsePerRound);
+        
         
 
         protected virtual void Awake()
@@ -33,6 +42,17 @@ namespace Dev.ComradeVanti.Wurfel
             StartCoroutine(Routine());
         }
 
+        public virtual void OnRoundStarted()
+        {
+            activatedEffect = false;
+            roundActive = true;
+        }
+        
+        public virtual void OnRoundEnded()
+        {
+            roundActive = false;
+        }
+
         protected virtual void Execute(int strength) { }
 
         protected Coroutine CallCameraToMe() =>
@@ -41,6 +61,7 @@ namespace Dev.ComradeVanti.Wurfel
         protected virtual void CompleteEffect()
         {
             arenaKeeper.IsFrozen = false;
+            activatedEffect = true;
             dice.OnEffectDone();
         }
 

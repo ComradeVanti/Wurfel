@@ -4995,35 +4995,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143b663a7421aa348bf18ea402034b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onDone:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2470363426742867487}
-        m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.Dice, Dev.ComradeVanti.Wurfel
-        m_MethodName: OnEffectDone
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  oneUsePerRound: 1
   affectedLayers:
     serializedVersion: 2
     m_Bits: 8
   particleSystem: {fileID: 978304754546332301}
-  maxRadius: 10
   maxForce: 20
---- !u!114 &2470363426742867487 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4724670653967486680, guid: ba16572887bd543429db2e79c1790c04, type: 3}
-  m_PrefabInstance: {fileID: 7194808954626627783}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990309720604316409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a4012a4fe4b6f4fbaf1d7767942805, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
