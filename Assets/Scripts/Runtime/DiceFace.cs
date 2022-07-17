@@ -15,7 +15,7 @@ namespace Dev.ComradeVanti.Wurfel
         
         public int Value => value;
 
-        public bool IsFlatOnGround => triggeredCount == 4;
+        public bool IsFlatOnGround => triggeredCount >= 4;
         
         public bool IsTouchingGround => triggeredCount > 0;
 
