@@ -13,7 +13,10 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private DiceSpawner diceSpawner;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private DiceLauncher launcher;
+        [SerializeField] private ArenaKeeper arenaKeeper;
+        [SerializeField] private GameKeeper gameKeeper;
 
+        private int score;
         private readonly DiceBag diceBag = DiceBag.MakeDefault();
 
 
@@ -27,6 +30,12 @@ namespace Dev.ComradeVanti.Wurfel
         {
             cameraController.LookAt(transform.position + new Vector3(0, 1, 0));
             onTurnStarts.Invoke();
+        }
+
+        public void CollectPoints()
+        {
+            score += arenaKeeper.CollectDice(team);
+            gameKeeper.SwitchTeam();
         }
 
         public void SpawnDice()

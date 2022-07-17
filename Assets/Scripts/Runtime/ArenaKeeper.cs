@@ -25,7 +25,7 @@ namespace Dev.ComradeVanti.Wurfel
         public void OnDiceLaunched(GameObject diceGameObject) =>
             AddDice(diceGameObject.GetComponent<Dice>());
 
-        private static bool IsCalm(Dice dice) => 
+        private static bool IsCalm(Dice dice) =>
             !dice.IsMoving && !dice.IsActivatingEffect && !dice.IsFrozen;
 
         private bool ArenaIsCalm() =>
@@ -72,6 +72,26 @@ namespace Dev.ComradeVanti.Wurfel
         {
             die.Iter(it => it.OnRoundEnded());
             onRoundEnded.Invoke();
+        }
+
+        public int CollectDice(Team team)
+        {
+            bool IsOnTeamSide(Dice dice)
+            {
+                var x = dice.transform.position.x;
+                return team == Team.Blue ? x > 0 : x < 0;
+            }
+
+            var dieOnTeamSide = die.Where(IsOnTeamSide).ToArray();
+            var score = dieOnTeamSide.Sum(dice => dice.Value);
+            
+            dieOnTeamSide.Iter(dice =>
+            {
+                die.Remove(dice);
+                Destroy(dice.gameObject);
+            });
+
+            return score;
         }
 
     }
