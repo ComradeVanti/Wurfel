@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Dev.ComradeVanti.Wurfel
 {
@@ -13,9 +14,15 @@ namespace Dev.ComradeVanti.Wurfel
 
         private State gameState = new State(Team.Red);
 
-
         private void Start() =>
             SetTeam(startingTeam);
+
+
+        public void RestartGame() => 
+            SceneManager.LoadScene("Main");
+
+        public void Quit() => 
+            Application.Quit();
 
         public void SwitchTeam() =>
             SetTeam(gameState.Team == Team.Red ? Team.Blue : Team.Red);

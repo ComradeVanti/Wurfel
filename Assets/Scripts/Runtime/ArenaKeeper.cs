@@ -13,6 +13,7 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private UnityEvent onRoundEnded;
 
         private readonly List<Dice> die = new List<Dice>();
+        private bool gameRunning = true;
 
 
         public bool IsFrozen
@@ -29,6 +30,13 @@ namespace Dev.ComradeVanti.Wurfel
 
         private bool ArenaIsCalm() =>
             die.All(IsCalm);
+
+        public void OnGameOver()
+        {
+            IsFrozen = true;
+            die.Clear();
+            gameRunning = false;
+        }
 
         public void RemoveDice(Dice dice)
         {
@@ -80,7 +88,8 @@ namespace Dev.ComradeVanti.Wurfel
         private void EndRound()
         {
             die.Iter(it => it.OnRoundEnded());
-            onRoundEnded.Invoke();
+            if (gameRunning)
+                onRoundEnded.Invoke();
         }
 
     }

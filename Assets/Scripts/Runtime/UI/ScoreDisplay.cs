@@ -11,7 +11,7 @@ namespace Dev.ComradeVanti.Wurfel.UI
 
 
         public void OnScoreChanged(int score) =>
-            scoreDisplay.text = $"{score}/100";
+            scoreDisplay.text = $"{score}/50";
 
     }
 

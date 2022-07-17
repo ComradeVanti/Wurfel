@@ -23,7 +23,6 @@ namespace Dev.ComradeVanti.Wurfel
             {
                 var team = dicePosition.x > 0 ? Team.Blue : Team.Red;
                 var keeper = team == Team.Red ? redTeam : blueTeam;
-                keeper.AddScore(score);
                 
                 onScoreAdded.Invoke(score, team);
 
@@ -41,6 +40,7 @@ namespace Dev.ComradeVanti.Wurfel
                     yield return null;
                 }
 
+                keeper.AddScore(score);
                 transform.position = new Vector3(0, -100, 0);
             }
             
