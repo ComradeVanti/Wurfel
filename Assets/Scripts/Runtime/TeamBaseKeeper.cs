@@ -29,7 +29,7 @@ namespace Dev.ComradeVanti.Wurfel
             var score = Mathf.Max(arenaKeeper.CountScoreFor(team), 0);
             onScoreChanged.Invoke(score);
 
-            if (score > 50)
+            if (score > 20)
                 onScoreDone.Invoke(team);
         }
 
