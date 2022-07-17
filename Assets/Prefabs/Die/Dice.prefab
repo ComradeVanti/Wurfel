@@ -154,7 +154,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4724670653967486680}
         m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.Dice, Dev.ComradeVanti.Wurfel
-        m_MethodName: set_Value
+        m_MethodName: set_FaceValue
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

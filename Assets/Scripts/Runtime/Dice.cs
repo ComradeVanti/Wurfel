@@ -9,9 +9,9 @@ namespace Dev.ComradeVanti.Wurfel
     public class Dice : MonoBehaviour
     {
 
+        [SerializeField] private int scoreMultiplier;
+        
         private Opt<DiceEffect> effect;
-        private DiceFaceTracker faceTracker;
-        private DiceMotionTracker motionTracker;
         private MotionFreezer freezer;
 
         private bool activatedEffect;
@@ -19,7 +19,9 @@ namespace Dev.ComradeVanti.Wurfel
         private int lastValue;
 
 
-        public int Value { get; set; }
+        public int FaceValue { get; set; }
+
+        public int ScoreValue => FaceValue * scoreMultiplier;
 
         public bool IsTouchingGround { get; private set; }
 
@@ -37,8 +39,6 @@ namespace Dev.ComradeVanti.Wurfel
         private void Awake()
         {
             effect = this.TryGetComponent<DiceEffect>();
-            faceTracker = GetComponent<DiceFaceTracker>();
-            motionTracker = GetComponent<DiceMotionTracker>();
             freezer = GetComponent<MotionFreezer>();
         }
 
@@ -50,7 +50,7 @@ namespace Dev.ComradeVanti.Wurfel
             if (!IsTouchingGround)
                 wasInAir = true;
 
-            var valueChanged = lastValue != Value;
+            var valueChanged = lastValue != FaceValue;
 
             var shouldActivateEffect =
                 change.Started(it => it.IsRestingFlat)
@@ -80,7 +80,7 @@ namespace Dev.ComradeVanti.Wurfel
                 activatedEffect = true;
                 IsActivatingEffect = true;
                 wasInAir = false;
-                lastValue = Value;
+                lastValue = FaceValue;
 
                 IEnumerator Test()
                 {
@@ -89,7 +89,7 @@ namespace Dev.ComradeVanti.Wurfel
                     FindObjectOfType<ArenaKeeper>()
                         .IsFrozen = true;
                     yield return new WaitForSeconds(1);
-                    it.Activate(Value);
+                    it.Activate(FaceValue);
                 }
 
                 StartCoroutine(Test());

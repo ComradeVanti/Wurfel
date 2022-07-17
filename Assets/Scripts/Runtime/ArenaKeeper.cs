@@ -83,7 +83,7 @@ namespace Dev.ComradeVanti.Wurfel
             }
 
             var dieOnTeamSide = die.Where(IsOnTeamSide).ToArray();
-            var score = dieOnTeamSide.Sum(dice => dice.Value);
+            var score = dieOnTeamSide.Sum(dice => dice.ScoreValue);
             
             dieOnTeamSide.Iter(dice =>
             {

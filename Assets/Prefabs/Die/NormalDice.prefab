@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_fontColor.r
       value: 0.13207549
       objectReference: {fileID: 0}
+    - target: {fileID: 4724670653967486680, guid: ba16572887bd543429db2e79c1790c04, type: 3}
+      propertyPath: scoreMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6635314455669117342, guid: ba16572887bd543429db2e79c1790c04, type: 3}
       propertyPath: m_fontColor.b
       value: 0.13207549
