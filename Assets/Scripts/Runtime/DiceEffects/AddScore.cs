@@ -23,7 +23,7 @@ namespace Dev.ComradeVanti.Wurfel
             IEnumerator Routine()
             {
                 var score = strength * multiplier;
-                yield return scoreAdder.AddScoreToCurrentTeam(score, transform.position);
+                yield return scoreAdder.AddScore(score, transform.position);
                 CompleteEffect();
             }
 

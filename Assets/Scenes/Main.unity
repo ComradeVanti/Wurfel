@@ -630,10 +630,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 403390030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b4e71fa19d617c40aec0225860dd64c, type: 3}
+  m_Script: {fileID: 11500000, guid: 796547900061cad4dbc248a2a20cc96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreDisplay: {fileID: 403390032}
+  display: {fileID: 403390032}
+  redColor: {r: 0.7735849, g: 0.20069422, b: 0.20069422, a: 1}
+  blueColor: {r: 0.3304112, g: 0.42405125, b: 0.9339623, a: 1}
 --- !u!114 &413159197 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2412201340563984557, guid: f5429a94fcab9fe41afc79c45c68d50b, type: 3}
@@ -875,18 +877,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2412201340157786832}
         m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.TeamBaseKeeper, Dev.ComradeVanti.Wurfel
-        m_MethodName: OnTurnTeamChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2040449103}
-        m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.ScoreAdder, Dev.ComradeVanti.Wurfel
         m_MethodName: OnTurnTeamChanged
         m_Mode: 0
         m_Arguments:
@@ -1904,8 +1894,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 403390034}
-        m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.UI.ScoreDisplay, Dev.ComradeVanti.Wurfel.UI
-        m_MethodName: OnScoreChanged
+        m_TargetAssemblyTypeName: Dev.ComradeVanti.Wurfel.UI.ScoreAddedDisplay, Dev.ComradeVanti.Wurfel.UI
+        m_MethodName: OnScoreAdded
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

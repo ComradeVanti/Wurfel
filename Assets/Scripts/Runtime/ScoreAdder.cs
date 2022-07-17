@@ -10,22 +10,22 @@ namespace Dev.ComradeVanti.Wurfel
     {
 
         [SerializeField] private Transform cameraTransform;
-        [SerializeField] private UnityEvent<int> onScoreAdded;
+        [SerializeField] private UnityEvent<int, Team> onScoreAdded;
         [SerializeField] private TeamBaseKeeper redTeam;
         [SerializeField] private TeamBaseKeeper blueTeam;
         [SerializeField] private float riseHeight;
         [SerializeField] private float riseTime;
         
-        private TeamBaseKeeper current;
-
-        public void OnTurnTeamChanged(Team team) => 
-            current = team == Team.Red ? redTeam : blueTeam;
-
-        public Coroutine AddScoreToCurrentTeam(int score, Vector3 dicePosition)
+        
+        public Coroutine AddScore(int score, Vector3 dicePosition)
         {
             IEnumerator Animation()
             {
-                onScoreAdded.Invoke(score);
+                var team = dicePosition.x > 0 ? Team.Blue : Team.Red;
+                var keeper = team == Team.Red ? redTeam : blueTeam;
+                keeper.AddScore(score);
+                
+                onScoreAdded.Invoke(score, team);
 
                 var t = 0f;
                 var transform = this.transform;
@@ -43,8 +43,7 @@ namespace Dev.ComradeVanti.Wurfel
 
                 transform.position = new Vector3(0, -100, 0);
             }
-
-            current.AddScore(score);
+            
             return StartCoroutine(Animation());
         }
 
