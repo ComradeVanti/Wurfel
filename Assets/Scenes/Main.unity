@@ -933,6 +933,8 @@ MonoBehaviour:
     weight: 3
   - item: {fileID: 4880927265615194408, guid: 6294cffceb1826740a3d9a7f6c94ebc4, type: 3}
     weight: 7
+  - item: {fileID: 7208308557675831109, guid: 77317b1648c7e5444a8a46665cc64cfc, type: 3}
+    weight: 5
 --- !u!114 &897896095
 MonoBehaviour:
   m_ObjectHideFlags: 0

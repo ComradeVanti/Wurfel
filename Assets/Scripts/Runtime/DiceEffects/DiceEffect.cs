@@ -12,6 +12,7 @@ namespace Dev.ComradeVanti.Wurfel
         protected Dice dice;
         protected CameraController cameraController;
         protected ArenaKeeper arenaKeeper;
+        protected new Rigidbody rigidbody;
 
         private bool roundActive;
         private bool activatedEffect;
@@ -26,6 +27,7 @@ namespace Dev.ComradeVanti.Wurfel
             dice = GetComponent<Dice>();
             cameraController = FindObjectOfType<CameraController>();
             arenaKeeper = FindObjectOfType<ArenaKeeper>();
+            rigidbody = GetComponent<Rigidbody>();
         }
 
 
@@ -53,7 +55,10 @@ namespace Dev.ComradeVanti.Wurfel
             roundActive = false;
         }
 
-        protected virtual void Execute(int strength) { }
+        protected virtual void Execute(int strength)
+        {
+            CompleteEffect();
+        }
 
         protected Coroutine CallCameraToMe() =>
             cameraController.LookAt(transform.position);
