@@ -39,7 +39,7 @@ namespace Dev.ComradeVanti.Wurfel
 
         public void CollectPoints()
         {
-            score += arenaKeeper.CollectDice(team);
+            score = Mathf.Max(0, score + arenaKeeper.CollectDice(team));
             onScoreChanged.Invoke(score);
             this.WaitAndRun(1, () => gameKeeper.SwitchTeam());
         }
