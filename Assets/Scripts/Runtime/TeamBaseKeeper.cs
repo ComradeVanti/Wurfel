@@ -9,7 +9,6 @@ namespace Dev.ComradeVanti.Wurfel
 
         [SerializeField] private UnityEvent onTurnStarts;
         [SerializeField] private Team team;
-        [SerializeField] private DiceSpawner diceSpawner;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private UnityEvent<int> onScoreChanged;
         [SerializeField] private UnityEvent<Team> onScoreDone;
@@ -35,7 +34,7 @@ namespace Dev.ComradeVanti.Wurfel
         public void AddScore(int score)
         {
             Score = Mathf.Max(Score + score, 0);
-            onScoreChanged.Invoke(this.Score);
+            onScoreChanged.Invoke(Score);
             
             if(score >= 50)
                 onScoreDone.Invoke(team);
@@ -47,11 +46,11 @@ namespace Dev.ComradeVanti.Wurfel
             onTurnStarts.Invoke();
         }
         
-        public void SpawnDice()
+        public void OnDiceSelected(GameObject dice)
         {
-            var diceGameObject = diceSpawner.SpawnDice(transform.position);
-            launcher.Launch(diceGameObject);
-            cameraController.Follow(diceGameObject.transform);
+            dice.transform.position = transform.position;
+            launcher.Launch(dice);
+            cameraController.Follow(dice.transform);
         }
 
     }
