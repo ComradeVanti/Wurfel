@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Dev.ComradeVanti.Wurfel
@@ -6,9 +7,12 @@ namespace Dev.ComradeVanti.Wurfel
     public static class Vector3Ext
     {
 
+        public static Vector3 MapY(this Vector3 v, Func<float, float> mapY) =>
+            new Vector3(v.x, mapY(v.y), v.z);
+
         public static Vector3 WithY(this Vector3 v, float y) =>
             new Vector3(v.x, y, v.z);
-        
+
         public static Vector3 WithZ(this Vector3 v, float z) =>
             new Vector3(v.x, v.y, z);
 

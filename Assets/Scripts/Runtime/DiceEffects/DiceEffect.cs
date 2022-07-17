@@ -10,9 +10,9 @@ namespace Dev.ComradeVanti.Wurfel
         protected Dice dice;
         protected CameraController cameraController;
         protected ArenaKeeper arenaKeeper;
+        
 
-
-        private void Awake()
+        protected virtual void Awake()
         {
             dice = GetComponent<Dice>();
             cameraController = FindObjectOfType<CameraController>();
@@ -33,7 +33,7 @@ namespace Dev.ComradeVanti.Wurfel
             StartCoroutine(Routine());
         }
 
-        protected abstract void Execute(int strength);
+        protected virtual void Execute(int strength) { }
 
         protected Coroutine CallCameraToMe() =>
             cameraController.LookAt(transform.position);

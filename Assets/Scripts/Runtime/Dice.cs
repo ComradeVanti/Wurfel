@@ -7,9 +7,7 @@ namespace Dev.ComradeVanti.Wurfel
 
     public class Dice : MonoBehaviour
     {
-
-        [SerializeField] private int scoreMultiplier;
-
+        
         private Opt<DiceEffect> effect;
         private MotionFreezer freezer;
 
@@ -19,9 +17,7 @@ namespace Dev.ComradeVanti.Wurfel
 
 
         public int FaceValue { get; set; }
-
-        public int ScoreValue => FaceValue * scoreMultiplier;
-
+        
         public bool IsTouchingGround { get; private set; }
 
         public bool IsMoving { get; private set; }

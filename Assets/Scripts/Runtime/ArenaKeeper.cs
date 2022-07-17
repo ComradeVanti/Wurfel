@@ -73,34 +73,6 @@ namespace Dev.ComradeVanti.Wurfel
             onRoundEnded.Invoke();
         }
 
-        private IEnumerable<Dice> GetDiceOnSide(Team team)
-        {
-            bool IsOnTeamSide(Dice dice)
-            {
-                var x = dice.transform.position.x;
-                return team == Team.Blue ? x > 0 : x < 0;
-            }
-
-            return die.Where(IsOnTeamSide);
-        }
-
-        public int CountDiceOnSide(Team team) => 
-            GetDiceOnSide(team).Count();
-
-        public int CollectDice(Team team)
-        {
-            var dieOnTeamSide = GetDiceOnSide(team).ToArray();
-            var score = dieOnTeamSide.Sum(dice => dice.ScoreValue);
-
-            dieOnTeamSide.Iter(dice =>
-            {
-                die.Remove(dice);
-                Destroy(dice.gameObject);
-            });
-
-            return score;
-        }
-
     }
 
 }
