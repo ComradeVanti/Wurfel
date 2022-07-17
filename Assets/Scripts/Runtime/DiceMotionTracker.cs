@@ -1,5 +1,4 @@
-using System.Linq;
-using ComradeVanti.CSharpTools;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,15 +7,16 @@ namespace Dev.ComradeVanti.Wurfel
 
     public class DiceMotionTracker : MonoBehaviour
     {
-        
+
+        [SerializeField] private UnityEvent<bool> onIsTouchingSurfaceChanged;
+        [SerializeField] private UnityEvent<bool> onIsMovingChanged;
         [SerializeField] private float stillMovementSpeedThreshold;
         [SerializeField] private float stillRotationSpeedThreshold;
-        [SerializeField] private UnityEvent<DiceMotionChange> onMotionChanged;
 
         private new Rigidbody rigidbody;
-        private MotionFreezer freezer;
-        private Opt<DiceMotionState> prevMotionState = Opt.None<DiceMotionState>();
-        private DiceFace[] faces;
+        private readonly HashSet<Collider> touchingColliders = new HashSet<Collider>();
+        private bool wasTouchingSurface;
+        private bool wasMoving;
 
 
         private float Speed => rigidbody.velocity.magnitude;
@@ -29,40 +29,51 @@ namespace Dev.ComradeVanti.Wurfel
 
         private bool IsMoving => IsMovingLaterally || IsRotating;
 
-        private bool IsOnGround => faces.Any(face => face.IsTouchingGround);
-
-        private bool IsFlatOnGround => faces.Any(face => face.IsFlatOnGround);
-
-        private DiceGroundedState GroundedState =>
-            IsOnGround
-                ? IsFlatOnGround
-                    ? DiceGroundedState.FlatOnGround
-                    : DiceGroundedState.TouchingGround
-                : DiceGroundedState.InAir;
+        private bool IsTouchingSurface => touchingColliders.Count > 0;
 
 
-        private void Awake()
-        {
+        private void Awake() =>
             rigidbody = GetComponent<Rigidbody>();
-            freezer = GetComponent<MotionFreezer>();
-            faces = GetComponentsInChildren<DiceFace>();
-        }
 
-        private void Update()
+        private void Update() =>
+            UpdateIsMoving();
+
+        private void OnCollisionEnter(Collision collision)
         {
-            if (!freezer.IsFrozen)
-                CheckForMotionUpdates();
-        }
-
-        private void CheckForMotionUpdates()
-        {
-            var motionState = new DiceMotionState(IsMoving, GroundedState);
-
-            if (!prevMotionState.Contains(motionState))
+            if (collision.relativeVelocity.magnitude > 0.1f)
             {
-                var change = new DiceMotionChange(motionState, prevMotionState);
-                onMotionChanged.Invoke(change);
-                prevMotionState = Opt.Some(motionState);
+                touchingColliders.Add(collision.collider);
+                UpdateIsTouchingSurface();
+            }
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            if (collision.relativeVelocity.magnitude > 0.1f)
+            {
+                touchingColliders.Remove(collision.collider);
+                UpdateIsTouchingSurface();
+            }
+        }
+
+        private void UpdateIsMoving()
+        {
+            var isMoving = IsMoving;
+
+            if (isMoving != wasMoving)
+            {
+                wasMoving = isMoving;
+                onIsMovingChanged.Invoke(isMoving);
+            }
+        }
+
+        private void UpdateIsTouchingSurface()
+        {
+            var isTouchingSurface = IsTouchingSurface;
+            if (isTouchingSurface != wasTouchingSurface)
+            {
+                wasTouchingSurface = isTouchingSurface;
+                onIsTouchingSurfaceChanged.Invoke(isTouchingSurface);
             }
         }
 

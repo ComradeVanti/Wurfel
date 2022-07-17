@@ -14,15 +14,23 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private UnityEvent<Team> onScoreDone;
 
         private DiceLauncher launcher;
-        
-        
-        public int Score { get; private set; }
+        private ArenaKeeper arenaKeeper;
 
-        
         private void Awake()
         {
             launcher = GetComponentInChildren<DiceLauncher>();
+            arenaKeeper = FindObjectOfType<ArenaKeeper>();
             onScoreChanged.Invoke(0);
+        }
+
+
+        public void CountScore()
+        {
+            var score = Mathf.Max(arenaKeeper.CountScoreFor(team), 0);
+            onScoreChanged.Invoke(score);
+
+            if (score > 50)
+                onScoreDone.Invoke(team);
         }
 
         public void OnTurnTeamChanged(Team turnTeam)
@@ -31,21 +39,12 @@ namespace Dev.ComradeVanti.Wurfel
                 StartTurn();
         }
 
-        public void AddScore(int score)
-        {
-            Score = Mathf.Max(Score + score, 0);
-            onScoreChanged.Invoke(Score);
-            
-            if(Score >= 50)
-                onScoreDone.Invoke(team);
-        }
-
         private void StartTurn()
         {
             cameraController.LookAt(transform.position + new Vector3(0, 1, 0));
             onTurnStarts.Invoke();
         }
-        
+
         public void OnDiceSelected(GameObject dice)
         {
             dice.transform.position = transform.position;

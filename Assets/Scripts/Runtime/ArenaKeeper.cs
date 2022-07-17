@@ -25,11 +25,21 @@ namespace Dev.ComradeVanti.Wurfel
         public void OnDiceLaunched(GameObject diceGameObject) =>
             AddDice(diceGameObject.GetComponent<Dice>());
 
-        private static bool IsCalm(Dice dice) =>
-            !dice.IsMoving && !dice.IsActivatingEffect && !dice.IsFrozen;
+        public int CountScoreFor(Team team)
+        {
+            bool Counts(Dice dice)
+            {
+                var x = dice.transform.position.x;
+                return team == Team.Red ? x < 0 : x > 0;
+            }
+
+            var dieToCount = die.Where(Counts);
+
+            return dieToCount.Select(it => it.ScoreValue).Collect().Sum();
+        }
 
         private bool ArenaIsCalm() =>
-            die.All(IsCalm);
+            die.All(it => it.IsResting);
 
         public void OnGameOver()
         {
@@ -48,7 +58,7 @@ namespace Dev.ComradeVanti.Wurfel
         {
             IEnumerator WaitForDiceToTouchGround()
             {
-                while (dice && !dice.IsTouchingGround)
+                while (dice && !dice.IsTouchingSurface)
                     yield return null;
 
                 if (dice)

@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_fontColor.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4724670653967486680, guid: ba16572887bd543429db2e79c1790c04, type: 3}
+      propertyPath: scoreMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6635314455669117342, guid: ba16572887bd543429db2e79c1790c04, type: 3}
       propertyPath: m_fontColor.b
       value: 1
@@ -135,22 +139,3 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: ba16572887bd543429db2e79c1790c04, type: 3}
---- !u!1 &184432244634336032 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7955417351387433534, guid: ba16572887bd543429db2e79c1790c04, type: 3}
-  m_PrefabInstance: {fileID: 7847643057794314526}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &-5494632496322795101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 184432244634336032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d719a14eda273a4e919674ee78a16a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneUsePerRound: 0
-  multiplier: 2

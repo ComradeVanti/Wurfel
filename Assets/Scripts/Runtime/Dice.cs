@@ -1,4 +1,3 @@
-using System;
 using ComradeVanti.CSharpTools;
 using ComradeVanti.OptUnity;
 using UnityEngine;
@@ -8,22 +7,27 @@ namespace Dev.ComradeVanti.Wurfel
 
     public class Dice : MonoBehaviour
     {
-        
+
+        [SerializeField] private int scoreMultiplier;
+
         private Opt<DiceEffect> effect;
         private MotionFreezer freezer;
         private ArenaKeeper arenaKeeper;
-        
-        private bool wasInAir;
-        private int lastValue;
+        private DiceMotionTracker motionTracker;
 
-
-        public int FaceValue { get; set; }
-        
-        public bool IsTouchingGround { get; private set; }
-
-        public bool IsMoving { get; private set; }
+        private Opt<int> value = Opt.None<int>();
+        private bool isMoving;
 
         public bool IsActivatingEffect { get; private set; }
+
+        public bool IsTouchingSurface { get; private set; }
+
+
+        public bool IsResting => !isMoving
+                                 && IsTouchingSurface
+                                 && !IsFrozen;
+
+        public Opt<int> ScoreValue => value.Map(it => it * scoreMultiplier);
 
         public bool IsFrozen
         {
@@ -37,25 +41,37 @@ namespace Dev.ComradeVanti.Wurfel
             effect = this.TryGetComponent<DiceEffect>();
             freezer = GetComponent<MotionFreezer>();
             arenaKeeper = FindObjectOfType<ArenaKeeper>();
+            motionTracker = GetComponent<DiceMotionTracker>();
         }
 
-        public void OnMotionChanged(DiceMotionChange change)
+        private void Update()
         {
-            IsTouchingGround = change.Now(it => it.IsTouchingGround);
-            IsMoving = change.Now(it => it.IsMoving);
+            if (transform.position.y < -5)
+                arenaKeeper.RemoveDice(this);
+        }
 
-            if (!IsTouchingGround)
-                wasInAir = true;
+        public void OnValueChanged(Opt<int> maybeValue)
+        {
+            value = maybeValue;
+            OnSomethingChanged();
+        }
 
-            var valueChanged = lastValue != FaceValue;
+        public void OnIsMovingChanged(bool isMoving)
+        {
+            this.isMoving = isMoving;
+            OnSomethingChanged();
+        }
 
-            var shouldActivateEffect =
-                change.Started(it => it.IsRestingFlat)
-                && effect.Exists(it => it.CanActivate)
-                && (wasInAir || valueChanged);
+        private void OnSomethingChanged() =>
+            value.Iter(value =>
+            {
+                if (IsResting) TryActivateEffect(value);
+            });
 
-            if (shouldActivateEffect)
-                TryActivateEffect();
+        public void OnIsTouchingSurfaceChanged(bool isTouchingSurface)
+        {
+            IsTouchingSurface = isTouchingSurface;
+            OnSomethingChanged();
         }
 
         public void OnNewRoundStarted() =>
@@ -64,26 +80,15 @@ namespace Dev.ComradeVanti.Wurfel
         public void OnRoundEnded() =>
             effect.Iter(it => it.OnRoundEnded());
 
-        public void OnEffectDone()
-        {
+        public void OnEffectDone() =>
             IsActivatingEffect = false;
-        }
 
-        private void TryActivateEffect() =>
+        private void TryActivateEffect(int value) =>
             effect.Iter(it =>
             {
                 IsActivatingEffect = true;
-                wasInAir = false;
-                lastValue = FaceValue;
-                
-                it.Activate(FaceValue);
+                it.Activate(value);
             });
-
-        private void Update()
-        {
-            if (transform.position.y < -10)
-                arenaKeeper.RemoveDice(this);
-        }
 
     }
 

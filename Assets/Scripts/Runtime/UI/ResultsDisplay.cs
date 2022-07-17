@@ -1,3 +1,4 @@
+using ComradeVanti.CSharpTools;
 using TMPro;
 using UnityEngine;
 
@@ -12,18 +13,26 @@ namespace Dev.ComradeVanti.Wurfel.UI
         private ArenaKeeper arenaKeeper;
         private CameraController cameraController;
 
+        private Opt<Team> firstWinner = Opt.None<Team>();
+
         private void Awake()
         {
             arenaKeeper = FindObjectOfType<ArenaKeeper>();
             cameraController = FindObjectOfType<CameraController>();
         }
 
-        public void OnTeamWon(Team team)
+        public void OnTeamReachedPoints(Team team)
         {
-            gameObject.SetActive(true);
-            cameraController.LookAt(transform.position);
-            arenaKeeper.OnGameOver();
-            teamText.text = $"{team} won.";
+            if (firstWinner.IsNone())
+            {
+                gameObject.SetActive(true);
+                cameraController.LookAt(transform.position);
+                arenaKeeper.OnGameOver();
+                teamText.text = $"{team} won.";
+                firstWinner = Opt.Some(team);
+            }
+            else
+                teamText.text = "Its a draw!";
         }
 
     }
