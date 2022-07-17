@@ -74,7 +74,7 @@ namespace Dev.ComradeVanti.Wurfel
             onRoundEnded.Invoke();
         }
 
-        public int CollectDice(Team team)
+        private IEnumerable<Dice> GetDiceOnSide(Team team)
         {
             bool IsOnTeamSide(Dice dice)
             {
@@ -82,9 +82,17 @@ namespace Dev.ComradeVanti.Wurfel
                 return team == Team.Blue ? x > 0 : x < 0;
             }
 
-            var dieOnTeamSide = die.Where(IsOnTeamSide).ToArray();
+            return die.Where(IsOnTeamSide);
+        }
+
+        public int CountDiceOnSide(Team team) => 
+            GetDiceOnSide(team).Count();
+
+        public int CollectDice(Team team)
+        {
+            var dieOnTeamSide = GetDiceOnSide(team).ToArray();
             var score = dieOnTeamSide.Sum(dice => dice.ScoreValue);
-            
+
             dieOnTeamSide.Iter(dice =>
             {
                 die.Remove(dice);

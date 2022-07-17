@@ -8,6 +8,7 @@ namespace Dev.ComradeVanti.Wurfel
     {
 
         public UnityEvent onTurnStarts;
+        public UnityEvent<bool> onCanCollectChanged;
 
         [SerializeField] private Team team;
         [SerializeField] private DiceSpawner diceSpawner;
@@ -31,6 +32,9 @@ namespace Dev.ComradeVanti.Wurfel
         {
             cameraController.LookAt(transform.position + new Vector3(0, 1, 0));
             onTurnStarts.Invoke();
+
+            var canCollect = arenaKeeper.CountDiceOnSide(team) >= 5;
+            onCanCollectChanged.Invoke(canCollect);
         }
 
         public void CollectPoints()
