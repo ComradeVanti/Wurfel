@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using ComradeVanti.OptUnity;
 using UnityEngine;
 
 namespace Dev.ComradeVanti.Wurfel
@@ -11,25 +9,25 @@ namespace Dev.ComradeVanti.Wurfel
 
         [SerializeField] private LayerMask affectedLayers;
         [SerializeField] private new ParticleSystem particleSystem;
-        [SerializeField] private float maxRadius;
         [SerializeField] private float maxForce;
 
 
         public override void Activate(int strength)
         {
             var t = Mathf.InverseLerp(0, 6, strength);
-            var radius = Mathf.Lerp(0, maxRadius, t);
             var force = Mathf.Lerp(0, maxForce, t);
 
-            Explode(radius, force);
+            Explode(force);
         }
 
-        private void Explode(float radius, float force)
+        private void Explode(float force)
         {
-            var affectedObjects = FindTargetsInRange(radius);
+            var affectedObjects = FindObjectsOfType<Rigidbody>()
+                .Where(it => affectedLayers.Contains(it.gameObject.layer))
+                .Where(it => it.gameObject != gameObject);
 
             onDone.Invoke();
-            
+
             affectedObjects.Iter(rigidbody =>
             {
                 var diff = rigidbody.position - transform.position;
@@ -39,15 +37,9 @@ namespace Dev.ComradeVanti.Wurfel
 
                 rigidbody.AddForce(direction * adjustedForce, ForceMode.Impulse);
             });
-            
+
             particleSystem.Play();
         }
-
-        private IEnumerable<Rigidbody> FindTargetsInRange(float radius) =>
-            Physics.OverlapSphere(transform.position, radius, affectedLayers)
-                   .Select(coll => coll.TryGetComponent<Rigidbody>())
-                   .Collect()
-                   .Where(it => it.gameObject != gameObject);
 
     }
 
