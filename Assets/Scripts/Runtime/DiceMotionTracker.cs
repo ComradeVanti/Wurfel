@@ -8,14 +8,13 @@ namespace Dev.ComradeVanti.Wurfel
 
     public class DiceMotionTracker : MonoBehaviour
     {
-
-        [SerializeField] private LayerMask groundLayers;
-        [SerializeField] private new Rigidbody rigidbody;
-        [SerializeField] private MotionFreezer freezer;
+        
         [SerializeField] private float stillMovementSpeedThreshold;
         [SerializeField] private float stillRotationSpeedThreshold;
         [SerializeField] private UnityEvent<DiceMotionChange> onMotionChanged;
 
+        private new Rigidbody rigidbody;
+        private MotionFreezer freezer;
         private Opt<DiceMotionState> prevMotionState = Opt.None<DiceMotionState>();
         private DiceFace[] faces;
 
@@ -42,15 +41,19 @@ namespace Dev.ComradeVanti.Wurfel
                 : DiceGroundedState.InAir;
 
 
-        private void Awake() =>
+        private void Awake()
+        {
+            rigidbody = GetComponent<Rigidbody>();
+            freezer = GetComponent<MotionFreezer>();
             faces = GetComponentsInChildren<DiceFace>();
+        }
 
         private void Update()
         {
             if (!freezer.IsFrozen)
                 CheckForMotionUpdates();
         }
-        
+
         private void CheckForMotionUpdates()
         {
             var motionState = new DiceMotionState(IsMoving, GroundedState);

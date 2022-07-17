@@ -6,7 +6,7 @@ namespace Dev.ComradeVanti.Wurfel
     public class MotionFreezer : MonoBehaviour
     {
 
-        [SerializeField] private new Rigidbody rigidbody;
+        private new Rigidbody rigidbody;
 
         private bool isFrozen;
         private Vector3 velocity;
@@ -25,6 +25,9 @@ namespace Dev.ComradeVanti.Wurfel
             }
         }
 
+
+        private void Awake() => 
+            rigidbody = GetComponent<Rigidbody>();
 
         public void Freeze()
         {
