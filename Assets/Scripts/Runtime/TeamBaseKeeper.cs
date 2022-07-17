@@ -37,7 +37,7 @@ namespace Dev.ComradeVanti.Wurfel
         {
             score += arenaKeeper.CollectDice(team);
             onScoreChanged.Invoke(score);
-            gameKeeper.SwitchTeam();
+            this.WaitAndRun(1, () => gameKeeper.SwitchTeam());
         }
 
         public void SpawnDice()
