@@ -1,3 +1,4 @@
+using System;
 using ComradeVanti.CSharpTools;
 using ComradeVanti.OptUnity;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Dev.ComradeVanti.Wurfel
         
         private Opt<DiceEffect> effect;
         private MotionFreezer freezer;
+        private ArenaKeeper arenaKeeper;
         
         private bool wasInAir;
         private int lastValue;
@@ -34,6 +36,7 @@ namespace Dev.ComradeVanti.Wurfel
         {
             effect = this.TryGetComponent<DiceEffect>();
             freezer = GetComponent<MotionFreezer>();
+            arenaKeeper = FindObjectOfType<ArenaKeeper>();
         }
 
         public void OnMotionChanged(DiceMotionChange change)
@@ -75,6 +78,12 @@ namespace Dev.ComradeVanti.Wurfel
                 
                 it.Activate(FaceValue);
             });
+
+        private void Update()
+        {
+            if (transform.position.y < -10)
+                arenaKeeper.RemoveDice(this);
+        }
 
     }
 

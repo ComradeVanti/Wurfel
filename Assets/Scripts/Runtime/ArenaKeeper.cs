@@ -9,7 +9,7 @@ namespace Dev.ComradeVanti.Wurfel
 
     public class ArenaKeeper : MonoBehaviour
     {
-        
+
         [SerializeField] private UnityEvent onRoundEnded;
 
         private readonly List<Dice> die = new List<Dice>();
@@ -30,13 +30,23 @@ namespace Dev.ComradeVanti.Wurfel
         private bool ArenaIsCalm() =>
             die.All(IsCalm);
 
+        public void RemoveDice(Dice dice)
+        {
+            die.Remove(dice);
+            Destroy(dice.gameObject);
+        }
+
         private void AddDice(Dice dice)
         {
             IEnumerator WaitForDiceToTouchGround()
             {
-                while (!dice.IsTouchingGround) yield return null;
+                while (dice && !dice.IsTouchingGround)
+                    yield return null;
 
-                StartRound();
+                if (dice)
+                    StartRound();
+                else
+                    onRoundEnded.Invoke();
             }
 
             die.Add(dice);

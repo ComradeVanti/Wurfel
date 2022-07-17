@@ -86,9 +86,6 @@ namespace Dev.ComradeVanti.Wurfel
 
         public Coroutine LookAt(Vector3 target)
         {
-            Vector3 CalcTarget() =>
-                target;
-
             bool ShouldStop(Vector3 offsetTarget, Vector3 targetRotation)
             {
                 var reachedTarget = Vector3.Distance(Position, offsetTarget) < 0.1f;
@@ -97,11 +94,12 @@ namespace Dev.ComradeVanti.Wurfel
                 return reachedTarget && looksAtTarget;
             }
 
-            return FollowWith(CalcTarget, ShouldStop);
+            return FollowWith(() => target, ShouldStop);
         }
 
         public Coroutine Follow(Transform transform) =>
-            FollowWith(() => transform.position, (_, _) => false);
+            FollowWith(() => transform ? transform.position : Position,
+                       (_, _) => !transform);
 
         public void StopFollowing()
         {
