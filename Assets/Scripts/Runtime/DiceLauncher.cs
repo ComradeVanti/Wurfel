@@ -10,6 +10,7 @@ namespace Dev.ComradeVanti.Wurfel
     public class DiceLauncher : MonoBehaviour
     {
 
+        [SerializeField] private UnityEvent<Opt<float>> onLaunchAngleChanged;
         [SerializeField] private UnityEvent<Opt<float>> onLaunchForceChanged;
         [SerializeField] private UnityEvent<GameObject> onDiceLaunched;
         [SerializeField] private SpringJoint spring;
@@ -86,30 +87,37 @@ namespace Dev.ComradeVanti.Wurfel
                 onDiceLaunched.Invoke(diceGameObject);
             }
 
-            IEnumerator ChargeForce(Vector3 launchDirection)
+            IEnumerator ChargeForce()
             {
                 var t = 0f;
                 while (Mouse.current.leftButton.isPressed)
                 {
                     t = Mathf.MoveTowards(t, 1f, Time.deltaTime / launchForceChargeTime);
+
+                    onLaunchAngleChanged.Invoke(Opt.Some(LaunchAngle));
                     onLaunchForceChanged.Invoke(Opt.Some(t));
                     yield return null;
                 }
 
+                onLaunchAngleChanged.Invoke(Opt.None<float>());
                 onLaunchForceChanged.Invoke(Opt.None<float>());
 
                 var force = Mathf.Lerp(minLaunchForce, maxLaunchForce, t);
-                LaunchWith(launchDirection * force);
+                LaunchWith(LaunchDir * force);
             }
 
-            IEnumerator PickDirection()
+            IEnumerator WaitForClick()
             {
                 while (!Mouse.current.leftButton.isPressed && enabled)
+                {
+                    onLaunchAngleChanged.Invoke(Opt.Some(LaunchAngle));
                     yield return null;
-                StartCoroutine(ChargeForce(LaunchDir));
+                }
+
+                StartCoroutine(ChargeForce());
             }
-            
-            StartCoroutine(PickDirection());
+
+            StartCoroutine(WaitForClick());
         }
 
     }
