@@ -2338,7 +2338,7 @@ MonoBehaviour:
   redTeam: {fileID: 1601831680}
   blueTeam: {fileID: 2412201340157786832}
   riseHeight: 1
-  riseTime: 1
+  riseTime: 0.5
 --- !u!4 &2040449104
 Transform:
   m_ObjectHideFlags: 0

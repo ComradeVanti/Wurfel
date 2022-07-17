@@ -14,10 +14,12 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private UnityEvent<int> onScoreChanged;
         [SerializeField] private UnityEvent<Team> onScoreDone;
 
-        private int score;
         private DiceLauncher launcher;
+        
+        
+        public int Score { get; private set; }
 
-
+        
         private void Awake()
         {
             launcher = GetComponentInChildren<DiceLauncher>();
@@ -32,8 +34,8 @@ namespace Dev.ComradeVanti.Wurfel
 
         public void AddScore(int score)
         {
-            this.score = Mathf.Max(this.score + score, 0);
-            onScoreChanged.Invoke(this.score);
+            Score = Mathf.Max(Score + score, 0);
+            onScoreChanged.Invoke(this.Score);
             
             if(score >= 50)
                 onScoreDone.Invoke(team);

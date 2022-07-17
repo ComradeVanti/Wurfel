@@ -23,8 +23,9 @@ namespace Dev.ComradeVanti.Wurfel
             {
                 var team = dicePosition.x > 0 ? Team.Blue : Team.Red;
                 var keeper = team == Team.Red ? redTeam : blueTeam;
+                var total = Mathf.Max(keeper.Score + score, 0);
                 
-                onScoreAdded.Invoke(score, team);
+                onScoreAdded.Invoke(total, team);
 
                 var t = 0f;
                 var transform = this.transform;
