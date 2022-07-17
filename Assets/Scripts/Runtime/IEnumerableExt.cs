@@ -70,6 +70,9 @@ namespace Dev.ComradeVanti.Wurfel
         public static Opt<T> TryFirst<T>(this IEnumerable<T> items, Func<T, bool> pred) =>
             items.Where(pred).Select(Opt.Some).FirstOr(Opt.None<T>());
 
+        public static IEnumerable<T> Without<T>(this IEnumerable<T> items, T item) =>
+            items.Where(it => !Equals(it, item));
+
         public static T Random<T>(this IEnumerable<T> items)
         {
             var array = items.ToArray();

@@ -14,7 +14,6 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private UnityEvent<int> onScoreChanged;
 
         private int score;
-        private readonly DiceBag diceBag = DiceBag.MakeDefault();
         private DiceLauncher launcher;
 
 
@@ -38,10 +37,15 @@ namespace Dev.ComradeVanti.Wurfel
             cameraController.LookAt(transform.position + new Vector3(0, 1, 0));
             onTurnStarts.Invoke();
         }
-
+        
         public void SpawnDice()
         {
-            var diceName = diceBag.GetRandom();
+            var diceName = diceSpawner.DiceNames.Random();
+            SpawnDiceWithName(diceName);
+        }
+
+        private void SpawnDiceWithName(string diceName)
+        {
             var diceGameObject = diceSpawner.SpawnDice(diceName, transform.position);
             launcher.Launch(diceGameObject);
             cameraController.Follow(diceGameObject.transform);

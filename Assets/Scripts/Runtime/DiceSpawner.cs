@@ -10,7 +10,15 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private GameObject[] prefabs;
 
 
-        private GameObject GetPrefabWithName(string diceName) => 
+        public string[] DiceNames { get; private set; }
+
+
+        private void Awake() =>
+            DiceNames = prefabs.Select(prefab => prefab.name)
+                               .Select(name => name[..^4])
+                               .ToArray();
+
+        private GameObject GetPrefabWithName(string diceName) =>
             prefabs.First(it => it.name == $"{diceName}Dice");
 
         public GameObject SpawnDice(string diceName, Vector3 location)
