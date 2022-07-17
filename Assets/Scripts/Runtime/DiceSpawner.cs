@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Dev.ComradeVanti.Wurfel
@@ -6,11 +7,17 @@ namespace Dev.ComradeVanti.Wurfel
     public class DiceSpawner : MonoBehaviour
     {
 
-        [SerializeField] private GameObject prefab;
+        [SerializeField] private GameObject[] prefabs;
 
 
-        public GameObject SpawnDice(Vector3 location) => 
-            Instantiate(prefab, location, Quaternion.identity);
+        private GameObject GetPrefabWithName(string diceName) => 
+            prefabs.First(it => it.name == $"{diceName}Dice");
+
+        public GameObject SpawnDice(string diceName, Vector3 location)
+        {
+            var prefab = GetPrefabWithName(diceName);
+            return Instantiate(prefab, location, Quaternion.identity);
+        }
 
     }
 

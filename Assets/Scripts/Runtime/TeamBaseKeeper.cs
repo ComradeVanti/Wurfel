@@ -10,20 +10,20 @@ namespace Dev.ComradeVanti.Wurfel
         [SerializeField] private DiceSpawner diceSpawner;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private DiceLauncher launcher;
-        
+
 
         public void OnTurnTeamChanged(Team turnTeam)
         {
-            if (turnTeam == team) 
+            if (turnTeam == team)
                 StartTurn();
         }
 
-        public void StartTurn() => 
+        public void StartTurn() =>
             SpawnDice();
 
         private void SpawnDice()
         {
-            var diceGameObject = diceSpawner.SpawnDice(transform.position);
+            var diceGameObject = diceSpawner.SpawnDice("Boom", transform.position);
             launcher.Launch(diceGameObject);
             cameraController.Follow(diceGameObject.transform);
         }
