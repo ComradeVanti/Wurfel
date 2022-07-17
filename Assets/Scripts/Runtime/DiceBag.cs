@@ -20,7 +20,8 @@ namespace Dev.ComradeVanti.Wurfel
         public static DiceBag MakeDefault() =>
             new DiceBag(new Dictionary<string, int>
             {
-                { "Boom", 3 }
+                { "Boom", 5 },
+                { "Bad", 5 }
             });
 
         public string GetRandom()
