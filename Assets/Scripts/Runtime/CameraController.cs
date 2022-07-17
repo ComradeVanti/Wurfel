@@ -7,9 +7,9 @@ namespace Dev.ComradeVanti.Wurfel
 
     public class CameraController : MonoBehaviour
     {
-
-        [SerializeField] private Transform cameraTransform;
-        [SerializeField] private float distance;
+        
+        [SerializeField] private float minDistance;
+        [SerializeField] private float maxDistance;
         [SerializeField] private float height;
         [SerializeField] private float smoothTime;
         [SerializeField] private float maxMoveSpeed;
@@ -31,6 +31,15 @@ namespace Dev.ComradeVanti.Wurfel
         {
             get => transform.forward;
             set => transform.forward = value;
+        }
+
+        private float Distance
+        {
+            get
+            {
+                var t = Mathf.InverseLerp(0, maxMoveSpeed, moveVelocity.magnitude);
+                return Mathf.Lerp(minDistance, maxDistance, t);
+            }
         }
 
 
@@ -57,7 +66,7 @@ namespace Dev.ComradeVanti.Wurfel
         private Vector3 CalcOffsetTarget(Vector3 target)
         {
             var lookDirection = target.normalized;
-            var offset = (lookDirection.Flat() * distance).WithY(height);
+            var offset = (lookDirection.Flat() * Distance).WithY(height);
             return target + offset;
         }
 

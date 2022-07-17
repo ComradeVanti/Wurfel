@@ -1144,12 +1144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2f12c4f26354444b8d11b26301ae44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 963194228}
-  distance: 3
+  minDistance: 5
+  maxDistance: 10
   height: 2
   smoothTime: 0.2
-  maxMoveSpeed: 20
-  maxRotationSpeed: 5
+  maxMoveSpeed: 40
+  maxRotationSpeed: 10
 --- !u!1 &976898630
 GameObject:
   m_ObjectHideFlags: 0
