@@ -10,8 +10,8 @@ namespace Dev.ComradeVanti.Wurfel.UI
         [SerializeField] private TextMeshProUGUI scoreDisplay;
 
 
-        public void OnScoreChanged(int score) => 
-            scoreDisplay.text = score.ToString();
+        public void OnScoreChanged(int score) =>
+            scoreDisplay.text = $"{score}/100";
 
     }
 

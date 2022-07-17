@@ -17,8 +17,11 @@ namespace Dev.ComradeVanti.Wurfel
         private DiceLauncher launcher;
 
 
-        private void Awake() =>
+        private void Awake()
+        {
             launcher = GetComponentInChildren<DiceLauncher>();
+            onScoreChanged.Invoke(0);
+        }
 
         public void OnTurnTeamChanged(Team turnTeam)
         {
