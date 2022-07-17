@@ -35,7 +35,7 @@ namespace Dev.ComradeVanti.Wurfel
             this.score = Mathf.Max(this.score + score, 0);
             onScoreChanged.Invoke(this.score);
             
-            if(score >= 5)
+            if(score >= 50)
                 onScoreDone.Invoke(team);
         }
 
